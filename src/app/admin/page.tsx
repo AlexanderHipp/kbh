@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import {
   DndContext,
@@ -20,25 +20,35 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical, Trash2, Upload, LogOut, Plus, Pencil, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  GripVertical,
+  Trash2,
+  Upload,
+  LogOut,
+  Plus,
+  Pencil,
+  ImageIcon,
+} from "lucide-react";
 
 import {
-  getProjectMedia,
-  uploadProjectMedia,
-  deleteProjectMedia,
+  getCategoryMedia,
+  uploadCategoryMedia,
+  deleteCategoryMedia,
   updateMediaPositions,
-  type ProjectMediaWithUrl,
+  type CategoryMediaWithUrl,
 } from "@/lib/supabase-media";
 import {
-  createProject,
-  updateProject,
-  deleteProject,
-  updateProjectPositions,
-  seedProjectsFromStatic,
-  type Project,
-  type ProjectInput,
-} from "@/lib/supabase-projects";
-import { useAllProjects } from "@/hooks/use-projects";
+  createCategory,
+  updateCategory,
+  deleteCategory,
+  updateCategoryPositions,
+  uploadCategoryThumbnail,
+  deleteCategoryThumbnail,
+  seedCategoriesFromStatic,
+  type CategoryWithThumbnailUrl,
+  type CategoryInput,
+} from "@/lib/supabase-categories";
+import { useAllCategories } from "@/hooks/use-categories";
 import { workItems } from "@/data/work-items";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -59,17 +69,22 @@ export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const { projects, setProjects, isLoading: isLoadingProjects, refetch: refetchProjects } = useAllProjects();
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [media, setMedia] = useState<ProjectMediaWithUrl[]>([]);
+  const {
+    categories,
+    setCategories,
+    isLoading: isLoadingCategories,
+    refetch: refetchCategories,
+  } = useAllCategories();
+  const [selectedCategory, setSelectedCategory] = useState<CategoryWithThumbnailUrl | null>(null);
+  const [media, setMedia] = useState<CategoryMediaWithUrl[]>([]);
   const [isLoadingMedia, setIsLoadingMedia] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
-  // Project form state
-  const [isProjectDialogOpen, setIsProjectDialogOpen] = useState(false);
-  const [editingProject, setEditingProject] = useState<Project | null>(null);
-  const [projectForm, setProjectForm] = useState<ProjectInput>({
+  // Category form state
+  const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
+  const [editingCategory, setEditingCategory] = useState<CategoryWithThumbnailUrl | null>(null);
+  const [categoryForm, setCategoryForm] = useState<CategoryInput>({
     slug: "",
     title_en: "",
     title_de: "",
@@ -77,19 +92,17 @@ export default function AdminPage() {
     subtitle_de: "",
     description_en: "",
     description_de: "",
-    role: "",
-    client: "",
-    year: new Date().getFullYear(),
-    category: "",
-    thumbnail: "",
   });
-  const [isSavingProject, setIsSavingProject] = useState(false);
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
+  const [isSavingCategory, setIsSavingCategory] = useState(false);
+  const thumbnailInputRef = useRef<HTMLInputElement>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   // Check auth on mount
@@ -101,12 +114,12 @@ export default function AdminPage() {
     setIsCheckingAuth(false);
   }, []);
 
-  // Seed projects on first load if authenticated
+  // Seed categories on first load if authenticated
   useEffect(() => {
-    if (isAuthenticated && !isLoadingProjects) {
-      seedProjectsFromStatic(workItems);
+    if (isAuthenticated && !isLoadingCategories) {
+      seedCategoriesFromStatic(workItems);
     }
-  }, [isAuthenticated, isLoadingProjects]);
+  }, [isAuthenticated, isLoadingCategories]);
 
   // Handle login
   const handleLogin = (e: React.FormEvent) => {
@@ -126,29 +139,29 @@ export default function AdminPage() {
     setIsAuthenticated(false);
   };
 
-  // Load media when project changes
+  // Load media when category changes
   const loadMedia = useCallback(async () => {
-    if (!selectedProject || !isAuthenticated) return;
+    if (!selectedCategory || !isAuthenticated) return;
     setIsLoadingMedia(true);
-    const items = await getProjectMedia(selectedProject.slug);
+    const items = await getCategoryMedia(selectedCategory.slug);
     setMedia(items);
     setIsLoadingMedia(false);
-  }, [selectedProject, isAuthenticated]);
+  }, [selectedCategory, isAuthenticated]);
 
   useEffect(() => {
-    if (isAuthenticated && selectedProject) {
+    if (isAuthenticated && selectedCategory) {
       loadMedia();
     }
-  }, [loadMedia, isAuthenticated, selectedProject]);
+  }, [loadMedia, isAuthenticated, selectedCategory]);
 
   // Handle file upload
   const handleUpload = async (files: FileList | null) => {
-    if (!files || files.length === 0 || !selectedProject) return;
+    if (!files || files.length === 0 || !selectedCategory) return;
 
     setIsUploading(true);
 
     for (const file of Array.from(files)) {
-      const result = await uploadProjectMedia(selectedProject.slug, file);
+      const result = await uploadCategoryMedia(selectedCategory.slug, file);
       if (result) {
         setMedia((prev) => [...prev, result]);
       }
@@ -176,22 +189,22 @@ export default function AdminPage() {
     }
   };
 
-  // Handle drag end for project reordering
-  const handleProjectDragEnd = async (event: DragEndEvent) => {
+  // Handle drag end for category reordering
+  const handleCategoryDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
-      const oldIndex = projects.findIndex((item) => item.id === active.id);
-      const newIndex = projects.findIndex((item) => item.id === over.id);
+      const oldIndex = categories.findIndex((item) => item.id === active.id);
+      const newIndex = categories.findIndex((item) => item.id === over.id);
 
-      const newProjects = arrayMove(projects, oldIndex, newIndex);
-      setProjects(newProjects);
+      const newCategories = arrayMove(categories, oldIndex, newIndex);
+      setCategories(newCategories);
 
-      const updates = newProjects.map((item, index) => ({
+      const updates = newCategories.map((item, index) => ({
         id: item.id,
         position: index,
       }));
-      await updateProjectPositions(updates);
+      await updateCategoryPositions(updates);
     }
   };
 
@@ -199,30 +212,48 @@ export default function AdminPage() {
   const handleDeleteMedia = async (id: string) => {
     if (!confirm("Delete this media item?")) return;
 
-    const success = await deleteProjectMedia(id);
+    const success = await deleteCategoryMedia(id);
     if (success) {
       setMedia((prev) => prev.filter((item) => item.id !== id));
     }
   };
 
-  // Handle project delete
-  const handleDeleteProject = async (project: Project) => {
-    if (!confirm(`Delete project "${project.title_en}"? This will also delete all associated media.`)) return;
+  // Handle category delete
+  const handleDeleteCategory = async (category: CategoryWithThumbnailUrl) => {
+    if (
+      !confirm(
+        `Delete category "${category.title_en}"? This will also delete all associated media.`,
+      )
+    )
+      return;
 
-    const success = await deleteProject(project.id);
+    const success = await deleteCategory(category.id);
     if (success) {
-      setProjects((prev) => prev.filter((p) => p.id !== project.id));
-      if (selectedProject?.id === project.id) {
-        setSelectedProject(null);
+      setCategories((prev) => prev.filter((c) => c.id !== category.id));
+      if (selectedCategory?.id === category.id) {
+        setSelectedCategory(null);
         setMedia([]);
       }
     }
   };
 
-  // Open project dialog for new project
-  const handleNewProject = () => {
-    setEditingProject(null);
-    setProjectForm({
+  // Handle thumbnail file selection
+  const handleThumbnailSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setThumbnailFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setThumbnailPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Open category dialog for new category
+  const handleNewCategory = () => {
+    setEditingCategory(null);
+    setCategoryForm({
       slug: "",
       title_en: "",
       title_de: "",
@@ -230,62 +261,77 @@ export default function AdminPage() {
       subtitle_de: "",
       description_en: "",
       description_de: "",
-      role: "",
-      client: "",
-      year: new Date().getFullYear(),
-      category: "",
-      thumbnail: "",
     });
-    setIsProjectDialogOpen(true);
+    setThumbnailFile(null);
+    setThumbnailPreview(null);
+    setIsCategoryDialogOpen(true);
   };
 
-  // Open project dialog for editing
-  const handleEditProject = (project: Project) => {
-    setEditingProject(project);
-    setProjectForm({
-      slug: project.slug,
-      title_en: project.title_en,
-      title_de: project.title_de,
-      subtitle_en: project.subtitle_en || "",
-      subtitle_de: project.subtitle_de || "",
-      description_en: project.description_en || "",
-      description_de: project.description_de || "",
-      role: project.role || "",
-      client: project.client || "",
-      year: project.year || new Date().getFullYear(),
-      category: project.category || "",
-      thumbnail: project.thumbnail || "",
+  // Open category dialog for editing
+  const handleEditCategory = (category: CategoryWithThumbnailUrl) => {
+    setEditingCategory(category);
+    setCategoryForm({
+      slug: category.slug,
+      title_en: category.title_en,
+      title_de: category.title_de,
+      subtitle_en: category.subtitle_en || "",
+      subtitle_de: category.subtitle_de || "",
+      description_en: category.description_en || "",
+      description_de: category.description_de || "",
     });
-    setIsProjectDialogOpen(true);
+    setThumbnailFile(null);
+    setThumbnailPreview(category.thumbnail_url || null);
+    setIsCategoryDialogOpen(true);
   };
 
-  // Save project
-  const handleSaveProject = async () => {
-    if (!projectForm.slug || !projectForm.title_en || !projectForm.title_de) {
+  // Save category
+  const handleSaveCategory = async () => {
+    if (!categoryForm.slug || !categoryForm.title_en || !categoryForm.title_de) {
       return;
     }
 
-    setIsSavingProject(true);
+    setIsSavingCategory(true);
 
-    if (editingProject) {
-      const updated = await updateProject(editingProject.id, projectForm);
-      if (updated) {
-        setProjects((prev) =>
-          prev.map((p) => (p.id === editingProject.id ? updated : p))
-        );
-        if (selectedProject?.id === editingProject.id) {
-          setSelectedProject(updated);
+    let thumbnailPath: string | null | undefined = undefined;
+
+    // Upload new thumbnail if selected
+    if (thumbnailFile) {
+      const path = await uploadCategoryThumbnail(categoryForm.slug, thumbnailFile);
+      if (path) {
+        thumbnailPath = path;
+        // Delete old thumbnail if editing
+        if (editingCategory?.thumbnail_path) {
+          await deleteCategoryThumbnail(editingCategory.thumbnail_path);
         }
-      }
-    } else {
-      const created = await createProject(projectForm);
-      if (created) {
-        setProjects((prev) => [...prev, created]);
       }
     }
 
-    setIsSavingProject(false);
-    setIsProjectDialogOpen(false);
+    const formData: CategoryInput = {
+      ...categoryForm,
+      ...(thumbnailPath !== undefined && { thumbnail_path: thumbnailPath }),
+    };
+
+    if (editingCategory) {
+      const updated = await updateCategory(editingCategory.id, formData);
+      if (updated) {
+        setCategories((prev) =>
+          prev.map((c) => (c.id === editingCategory.id ? updated : c)),
+        );
+        if (selectedCategory?.id === editingCategory.id) {
+          setSelectedCategory(updated);
+        }
+      }
+    } else {
+      const created = await createCategory(formData);
+      if (created) {
+        setCategories((prev) => [...prev, created]);
+      }
+    }
+
+    setIsSavingCategory(false);
+    setIsCategoryDialogOpen(false);
+    setThumbnailFile(null);
+    setThumbnailPreview(null);
   };
 
   // Show loading while checking auth
@@ -302,7 +348,9 @@ export default function AdminPage() {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <Card className="w-full max-w-sm p-6">
-          <h1 className="text-xl font-semibold mb-6 text-center">Admin Login</h1>
+          <h1 className="text-xl font-semibold mb-6 text-center">
+            Admin Login
+          </h1>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <Input
@@ -312,9 +360,7 @@ export default function AdminPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 autoFocus
               />
-              {error && (
-                <p className="text-sm text-red-500 mt-2">{error}</p>
-              )}
+              {error && <p className="text-sm text-red-500 mt-2">{error}</p>}
             </div>
             <Button type="submit" className="w-full">
               Login
@@ -331,52 +377,62 @@ export default function AdminPage() {
       <div className="container mx-auto px-4 max-w-6xl">
         <header className="mb-8 flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-semibold tracking-tight mb-2">Admin Dashboard</h1>
+            <h1 className="text-3xl font-semibold tracking-tight mb-2">
+              Admin Dashboard
+            </h1>
             <p className="text-muted-foreground">
-              Manage projects and their media
+              Manage categories and their media
             </p>
           </div>
-          <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleLogout}
+            className="gap-2"
+          >
             <LogOut className="h-4 w-4" />
             Logout
           </Button>
         </header>
 
-        {/* Projects Section */}
+        {/* Categories Section */}
         <section className="mb-12">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">Projects</h2>
-            <Button onClick={handleNewProject} size="sm" className="gap-2">
+            <h2 className="text-xl font-semibold">Categories</h2>
+            <Button onClick={handleNewCategory} size="sm" className="gap-2">
               <Plus className="h-4 w-4" />
-              New Project
+              New Category
             </Button>
           </div>
 
-          {isLoadingProjects ? (
+          {isLoadingCategories ? (
             <div className="space-y-2">
               {[...Array(3)].map((_, i) => (
-                <div key={i} className="h-16 bg-muted rounded-lg animate-pulse" />
+                <div
+                  key={i}
+                  className="h-16 bg-muted rounded-lg animate-pulse"
+                />
               ))}
             </div>
           ) : (
             <DndContext
               sensors={sensors}
               collisionDetection={closestCenter}
-              onDragEnd={handleProjectDragEnd}
+              onDragEnd={handleCategoryDragEnd}
             >
               <SortableContext
-                items={projects.map((p) => p.id)}
+                items={categories.map((c) => c.id)}
                 strategy={verticalListSortingStrategy}
               >
                 <div className="space-y-2">
-                  {projects.map((project) => (
-                    <SortableProjectItem
-                      key={project.id}
-                      project={project}
-                      isSelected={selectedProject?.id === project.id}
-                      onSelect={() => setSelectedProject(project)}
-                      onEdit={() => handleEditProject(project)}
-                      onDelete={() => handleDeleteProject(project)}
+                  {categories.map((category) => (
+                    <SortableCategoryItem
+                      key={category.id}
+                      category={category}
+                      isSelected={selectedCategory?.id === category.id}
+                      onSelect={() => setSelectedCategory(category)}
+                      onEdit={() => handleEditCategory(category)}
+                      onDelete={() => handleDeleteCategory(category)}
                     />
                   ))}
                 </div>
@@ -385,15 +441,15 @@ export default function AdminPage() {
           )}
         </section>
 
-        {/* Media Section - only show when a project is selected */}
-        {selectedProject && (
+        {/* Media Section - only show when a category is selected */}
+        {selectedCategory && (
           <section>
             <div className="mb-4">
               <h2 className="text-xl font-semibold">
-                Media for &quot;{selectedProject.title_en}&quot;
+                Media for &quot;{selectedCategory.title_en}&quot;
               </h2>
               <p className="text-sm text-muted-foreground">
-                Upload and organize media for this project
+                Upload and organize media for this category
               </p>
             </div>
 
@@ -430,7 +486,9 @@ export default function AdminPage() {
                   <p className="text-sm text-muted-foreground">Uploading...</p>
                 ) : (
                   <>
-                    <p className="font-medium">Drop files here or click to upload</p>
+                    <p className="font-medium">
+                      Drop files here or click to upload
+                    </p>
                     <p className="text-sm text-muted-foreground">
                       Images, GIFs, and videos
                     </p>
@@ -443,13 +501,18 @@ export default function AdminPage() {
             {isLoadingMedia ? (
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {[...Array(4)].map((_, i) => (
-                  <div key={i} className="aspect-square bg-muted rounded-lg animate-pulse" />
+                  <div
+                    key={i}
+                    className="aspect-square bg-muted rounded-lg animate-pulse"
+                  />
                 ))}
               </div>
             ) : media.length === 0 ? (
               <div className="text-center py-12 text-muted-foreground">
-                <p>No media uploaded yet for this project.</p>
-                <p className="text-sm mt-1">Upload files above to get started.</p>
+                <p>No media uploaded yet for this category.</p>
+                <p className="text-sm mt-1">
+                  Upload files above to get started.
+                </p>
               </div>
             ) : (
               <DndContext
@@ -457,7 +520,10 @@ export default function AdminPage() {
                 collisionDetection={closestCenter}
                 onDragEnd={handleMediaDragEnd}
               >
-                <SortableContext items={media.map((m) => m.id)} strategy={rectSortingStrategy}>
+                <SortableContext
+                  items={media.map((m) => m.id)}
+                  strategy={rectSortingStrategy}
+                >
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {media.map((item, index) => (
                       <SortableMediaItem
@@ -475,68 +541,69 @@ export default function AdminPage() {
             {/* Media Count */}
             {media.length > 0 && (
               <p className="text-sm text-muted-foreground mt-6">
-                {media.length} item{media.length !== 1 ? "s" : ""} - Drag to reorder
+                {media.length} item{media.length !== 1 ? "s" : ""} - Drag to
+                reorder
               </p>
             )}
           </section>
         )}
 
-        {/* Project Form Dialog */}
-        <Dialog open={isProjectDialogOpen} onOpenChange={setIsProjectDialogOpen}>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        {/* Category Form Dialog */}
+        <Dialog
+          open={isCategoryDialogOpen}
+          onOpenChange={setIsCategoryDialogOpen}
+        >
+          <DialogContent className="max-w-4xl w-full overflow-y-auto max-h-[90vh]">
             <DialogHeader>
               <DialogTitle>
-                {editingProject ? "Edit Project" : "New Project"}
+                {editingCategory ? "Edit Category" : "New Category"}
               </DialogTitle>
             </DialogHeader>
             <div className="space-y-4 pt-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block">Slug *</label>
-                  <Input
-                    value={projectForm.slug}
-                    onChange={(e) =>
-                      setProjectForm((prev) => ({
-                        ...prev,
-                        slug: e.target.value.toLowerCase().replace(/\s+/g, "-"),
-                      }))
-                    }
-                    placeholder="project-slug"
-                    disabled={!!editingProject}
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block">Year</label>
-                  <Input
-                    type="number"
-                    value={projectForm.year}
-                    onChange={(e) =>
-                      setProjectForm((prev) => ({
-                        ...prev,
-                        year: parseInt(e.target.value) || new Date().getFullYear(),
-                      }))
-                    }
-                  />
-                </div>
+              <div>
+                <label className="text-sm font-medium mb-1.5 block">
+                  Slug *
+                </label>
+                <Input
+                  value={categoryForm.slug}
+                  onChange={(e) =>
+                    setCategoryForm((prev) => ({
+                      ...prev,
+                      slug: e.target.value.toLowerCase().replace(/\s+/g, "-"),
+                    }))
+                  }
+                  placeholder="category-slug"
+                  disabled={!!editingCategory}
+                />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium mb-1.5 block">Title (EN) *</label>
+                  <label className="text-sm font-medium mb-1.5 block">
+                    Title (EN) *
+                  </label>
                   <Input
-                    value={projectForm.title_en}
+                    value={categoryForm.title_en}
                     onChange={(e) =>
-                      setProjectForm((prev) => ({ ...prev, title_en: e.target.value }))
+                      setCategoryForm((prev) => ({
+                        ...prev,
+                        title_en: e.target.value,
+                      }))
                     }
                     placeholder="English title"
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-1.5 block">Title (DE) *</label>
+                  <label className="text-sm font-medium mb-1.5 block">
+                    Title (DE) *
+                  </label>
                   <Input
-                    value={projectForm.title_de}
+                    value={categoryForm.title_de}
                     onChange={(e) =>
-                      setProjectForm((prev) => ({ ...prev, title_de: e.target.value }))
+                      setCategoryForm((prev) => ({
+                        ...prev,
+                        title_de: e.target.value,
+                      }))
                     }
                     placeholder="German title"
                   />
@@ -545,21 +612,31 @@ export default function AdminPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium mb-1.5 block">Subtitle (EN)</label>
+                  <label className="text-sm font-medium mb-1.5 block">
+                    Subtitle (EN)
+                  </label>
                   <Input
-                    value={projectForm.subtitle_en}
+                    value={categoryForm.subtitle_en}
                     onChange={(e) =>
-                      setProjectForm((prev) => ({ ...prev, subtitle_en: e.target.value }))
+                      setCategoryForm((prev) => ({
+                        ...prev,
+                        subtitle_en: e.target.value,
+                      }))
                     }
                     placeholder="English subtitle"
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-1.5 block">Subtitle (DE)</label>
+                  <label className="text-sm font-medium mb-1.5 block">
+                    Subtitle (DE)
+                  </label>
                   <Input
-                    value={projectForm.subtitle_de}
+                    value={categoryForm.subtitle_de}
                     onChange={(e) =>
-                      setProjectForm((prev) => ({ ...prev, subtitle_de: e.target.value }))
+                      setCategoryForm((prev) => ({
+                        ...prev,
+                        subtitle_de: e.target.value,
+                      }))
                     }
                     placeholder="German subtitle"
                   />
@@ -567,11 +644,16 @@ export default function AdminPage() {
               </div>
 
               <div>
-                <label className="text-sm font-medium mb-1.5 block">Description (EN)</label>
+                <label className="text-sm font-medium mb-1.5 block">
+                  Description (EN)
+                </label>
                 <Textarea
-                  value={projectForm.description_en}
+                  value={categoryForm.description_en}
                   onChange={(e) =>
-                    setProjectForm((prev) => ({ ...prev, description_en: e.target.value }))
+                    setCategoryForm((prev) => ({
+                      ...prev,
+                      description_en: e.target.value,
+                    }))
                   }
                   placeholder="English description"
                   rows={3}
@@ -579,75 +661,83 @@ export default function AdminPage() {
               </div>
 
               <div>
-                <label className="text-sm font-medium mb-1.5 block">Description (DE)</label>
+                <label className="text-sm font-medium mb-1.5 block">
+                  Description (DE)
+                </label>
                 <Textarea
-                  value={projectForm.description_de}
+                  value={categoryForm.description_de}
                   onChange={(e) =>
-                    setProjectForm((prev) => ({ ...prev, description_de: e.target.value }))
+                    setCategoryForm((prev) => ({
+                      ...prev,
+                      description_de: e.target.value,
+                    }))
                   }
                   placeholder="German description"
                   rows={3}
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block">Role</label>
-                  <Input
-                    value={projectForm.role}
-                    onChange={(e) =>
-                      setProjectForm((prev) => ({ ...prev, role: e.target.value }))
-                    }
-                    placeholder="e.g., Lead Photographer"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block">Client</label>
-                  <Input
-                    value={projectForm.client}
-                    onChange={(e) =>
-                      setProjectForm((prev) => ({ ...prev, client: e.target.value }))
-                    }
-                    placeholder="Client name"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block">Category</label>
-                  <Input
-                    value={projectForm.category}
-                    onChange={(e) =>
-                      setProjectForm((prev) => ({ ...prev, category: e.target.value }))
-                    }
-                    placeholder="e.g., Photography"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium mb-1.5 block">Thumbnail URL</label>
-                  <Input
-                    value={projectForm.thumbnail}
-                    onChange={(e) =>
-                      setProjectForm((prev) => ({ ...prev, thumbnail: e.target.value }))
-                    }
-                    placeholder="https://..."
-                  />
+              <div>
+                <label className="text-sm font-medium mb-1.5 block">
+                  Thumbnail
+                </label>
+                <div className="flex items-start gap-4">
+                  <div
+                    className="relative w-32 h-24 rounded-lg overflow-hidden bg-muted border-2 border-dashed border-muted-foreground/25 flex items-center justify-center cursor-pointer hover:border-muted-foreground/50 transition-colors"
+                    onClick={() => thumbnailInputRef.current?.click()}
+                  >
+                    {thumbnailPreview ? (
+                      <Image
+                        src={thumbnailPreview}
+                        alt="Thumbnail preview"
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      <ImageIcon className="h-8 w-8 text-muted-foreground" />
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <input
+                      ref={thumbnailInputRef}
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleThumbnailSelect}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => thumbnailInputRef.current?.click()}
+                    >
+                      <Upload className="h-4 w-4 mr-2" />
+                      Upload Thumbnail
+                    </Button>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Recommended: 800x600px or larger
+                    </p>
+                  </div>
                 </div>
               </div>
 
               <div className="flex justify-end gap-2 pt-4">
                 <Button
                   variant="outline"
-                  onClick={() => setIsProjectDialogOpen(false)}
+                  onClick={() => setIsCategoryDialogOpen(false)}
                 >
                   Cancel
                 </Button>
                 <Button
-                  onClick={handleSaveProject}
-                  disabled={isSavingProject || !projectForm.slug || !projectForm.title_en || !projectForm.title_de}
+                  onClick={handleSaveCategory}
+                  disabled={
+                    isSavingCategory ||
+                    !categoryForm.slug ||
+                    !categoryForm.title_en ||
+                    !categoryForm.title_de
+                  }
                 >
-                  {isSavingProject ? "Saving..." : "Save"}
+                  {isSavingCategory ? "Saving..." : "Save"}
                 </Button>
               </div>
             </div>
@@ -658,22 +748,22 @@ export default function AdminPage() {
   );
 }
 
-// Sortable project item component
-interface SortableProjectItemProps {
-  project: Project;
+// Sortable category item component
+interface SortableCategoryItemProps {
+  category: CategoryWithThumbnailUrl;
   isSelected: boolean;
   onSelect: () => void;
   onEdit: () => void;
   onDelete: () => void;
 }
 
-function SortableProjectItem({
-  project,
+function SortableCategoryItem({
+  category,
   isSelected,
   onSelect,
   onEdit,
   onDelete,
-}: SortableProjectItemProps) {
+}: SortableCategoryItemProps) {
   const {
     attributes,
     listeners,
@@ -681,7 +771,7 @@ function SortableProjectItem({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: project.id });
+  } = useSortable({ id: category.id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -706,16 +796,13 @@ function SortableProjectItem({
         <GripVertical className="h-4 w-4" />
       </div>
 
-      <button
-        onClick={onSelect}
-        className="flex-1 text-left"
-      >
+      <button onClick={onSelect} className="flex-1 text-left">
         <div className="flex items-center gap-3">
-          {project.thumbnail && (
+          {category.thumbnail_url && (
             <div className="relative w-12 h-12 rounded overflow-hidden bg-muted flex-shrink-0">
               <Image
-                src={project.thumbnail}
-                alt={project.title_en}
+                src={category.thumbnail_url}
+                alt={category.title_en}
                 fill
                 className="object-cover"
                 sizes="48px"
@@ -723,10 +810,12 @@ function SortableProjectItem({
             </div>
           )}
           <div>
-            <p className="font-medium">{project.title_en}</p>
-            <p className="text-sm text-muted-foreground">
-              {project.year} - {project.category}
-            </p>
+            <p className="font-medium">{category.title_en}</p>
+            {category.subtitle_en && (
+              <p className="text-sm text-muted-foreground">
+                {category.subtitle_en}
+              </p>
+            )}
           </div>
         </div>
       </button>
@@ -760,7 +849,7 @@ function SortableProjectItem({
 
 // Sortable media item component
 interface SortableMediaItemProps {
-  item: ProjectMediaWithUrl;
+  item: CategoryMediaWithUrl;
   index: number;
   onDelete: () => void;
 }

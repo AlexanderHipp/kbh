@@ -7,20 +7,20 @@ import { Button } from "@/components/ui/button";
 
 const HeroScene = dynamic(
   () => import("@/components/three/hero-scene").then((mod) => mod.HeroScene),
-  { ssr: false }
+  { ssr: false },
 );
 
 export function Hero() {
   const { t } = useLocale();
 
   return (
-    <section className="relative h-[500px] sm:h-[600px] lg:h-[700px] flex items-center justify-center overflow-hidden">
+    <section className="relative h-[800px] sm:h-[900px] lg:h-[1000px] flex items-center justify-center overflow-hidden border border-muted/80 border-b-2">
       <Suspense fallback={null}>
         <HeroScene />
       </Suspense>
 
       <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
-        <h1 className="text-4xl font-semibold tracking-tight mb-6">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight mb-6">
           {t.hero.headline}
         </h1>
         <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">

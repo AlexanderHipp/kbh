@@ -17,11 +17,13 @@ export const dictionary = {
     },
     imageComparison: {
       title: "From concept to series production",
+      subtitle: "We accompany your product through every development phase – from the initial idea to series-ready production.",
       labelLeft: "Concept",
       labelRight: "Production",
     },
     work: {
       title: "Portfolio",
+      subtitle: "A selection of our projects in medical technology, product design and development.",
       openPage: "View details",
       viewProject: "View project",
     },
@@ -57,7 +59,8 @@ export const dictionary = {
       ],
     },
     clients: {
-      title: "Our Tools",
+      title: "Trusted Partners",
+      subtitle: "We collaborate with leading companies in medical technology and manufacturing.",
       list: ["Solidworks", "KeyShot", "AutoCAD", "Ultimaker 3D Printing"],
     },
     contact: {
@@ -98,11 +101,13 @@ export const dictionary = {
     },
     imageComparison: {
       title: "Vom Konzept zur Serienproduktion",
+      subtitle: "Wir begleiten Ihr Produkt durch jede Entwicklungsphase – von der ersten Idee bis zur serienreifen Fertigung.",
       labelLeft: "Konzept",
       labelRight: "Produktion",
     },
     work: {
       title: "Portfolio",
+      subtitle: "Eine Auswahl unserer Projekte in Medizintechnik, Produktdesign und Entwicklung.",
       openPage: "Details ansehen",
       viewProject: "Projekt ansehen",
     },
@@ -138,7 +143,8 @@ export const dictionary = {
       ],
     },
     clients: {
-      title: "Unsere Werkzeuge",
+      title: "Vertrauensvolle Partner",
+      subtitle: "Wir arbeiten mit führenden Unternehmen in der Medizintechnik und Fertigung zusammen.",
       list: ["Solidworks", "KeyShot", "AutoCAD", "Ultimaker 3D-Druck"],
     },
     contact: {
@@ -182,11 +188,13 @@ export interface Dictionary {
   };
   imageComparison: {
     title: string;
+    subtitle: string;
     labelLeft: string;
     labelRight: string;
   };
   work: {
     title: string;
+    subtitle: string;
     openPage: string;
     viewProject: string;
   };
@@ -207,6 +215,7 @@ export interface Dictionary {
   };
   clients: {
     title: string;
+    subtitle: string;
     list: string[];
   };
   contact: {

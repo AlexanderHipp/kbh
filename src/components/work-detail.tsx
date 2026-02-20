@@ -73,44 +73,17 @@ export function WorkDetail({ item, locale, isModal = false, onClose }: WorkDetai
         </div>
       )}
 
-      {/* Metadata and content */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-        {/* Left column - metadata */}
-        <div className="space-y-4">
-          {item.role && (
-            <div>
-              <p className="text-sm text-muted-foreground">Role</p>
-              <p className="font-medium">{item.role}</p>
-            </div>
-          )}
-          {item.client && (
-            <div>
-              <p className="text-sm text-muted-foreground">Client</p>
-              <p className="font-medium">{item.client}</p>
-            </div>
-          )}
-          <div>
-            <p className="text-sm text-muted-foreground">Year</p>
-            <p className="font-medium">{item.year}</p>
-          </div>
-          <div>
-            <p className="text-sm text-muted-foreground">Category</p>
-            <p className="font-medium">{item.category}</p>
-          </div>
-        </div>
-
-        {/* Right column - title and description */}
-        <div className="md:col-span-2">
-          <h1 className="text-2xl font-semibold mb-2">{item.title[locale]}</h1>
-          {item.subtitle && (
-            <p className="text-lg text-muted-foreground mb-4">
-              {item.subtitle[locale]}
-            </p>
-          )}
-          <p className="text-muted-foreground leading-relaxed">
-            {item.description[locale]}
+      {/* Title and description */}
+      <div className="mb-8">
+        <h1 className="text-2xl font-semibold mb-2">{item.title[locale]}</h1>
+        {item.subtitle && (
+          <p className="text-lg text-muted-foreground mb-4">
+            {item.subtitle[locale]}
           </p>
-        </div>
+        )}
+        <p className="text-muted-foreground leading-relaxed">
+          {item.description[locale]}
+        </p>
       </div>
 
       {/* Additional media gallery */}

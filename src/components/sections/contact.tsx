@@ -11,19 +11,38 @@ export function Contact() {
   const { t } = useLocale();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const formData = new FormData(e.currentTarget);
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          message: formData.get("message"),
+        }),
+      });
 
-    // Reset after 3 seconds
-    setTimeout(() => setIsSubmitted(false), 3000);
+      if (response.ok) {
+        setIsSubmitted(true);
+        e.currentTarget.reset();
+        setTimeout(() => setIsSubmitted(false), 3000);
+      } else {
+        setError("Failed to send message. Please try again.");
+      }
+    } catch {
+      setError("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -71,6 +90,10 @@ export function Contact() {
               disabled={isSubmitting}
             />
           </div>
+
+          {error && (
+            <p className="text-sm text-red-500">{error}</p>
+          )}
 
           <Button
             type="submit"

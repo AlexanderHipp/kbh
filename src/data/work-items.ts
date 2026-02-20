@@ -15,10 +15,6 @@ export interface WorkItem {
     en: string;
     de: string;
   };
-  role?: string;
-  client?: string;
-  year: number;
-  category: string;
   thumbnail: string;
   media: WorkMedia[];
   description: {
@@ -38,8 +34,6 @@ export const workItems: WorkItem[] = [
       en: "Classic designs with modern 3D engineering",
       de: "Klassische Designs mit moderner 3D-Technik",
     },
-    year: 2024,
-    category: "Product Design",
     thumbnail:
       "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?w=800&h=600&fit=crop&auto=format",
     media: [
@@ -64,8 +58,6 @@ export const workItems: WorkItem[] = [
       en: "From transport boxes to sterilisation containers",
       de: "Von Transportboxen bis zu Sterilisationsbehältern",
     },
-    year: 2024,
-    category: "Product Design",
     thumbnail:
       "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&h=600&fit=crop&auto=format",
     media: [
@@ -90,8 +82,6 @@ export const workItems: WorkItem[] = [
       en: "Collaborative development for better solutions",
       de: "Kollaborative Entwicklung für bessere Lösungen",
     },
-    year: 2024,
-    category: "Development",
     thumbnail:
       "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&h=600&fit=crop&auto=format",
     media: [
@@ -116,8 +106,6 @@ export const workItems: WorkItem[] = [
       en: "Rapid prototyping with FDM technology",
       de: "Schnelles Prototyping mit FDM-Technologie",
     },
-    year: 2024,
-    category: "Prototyping",
     thumbnail:
       "https://images.unsplash.com/photo-1631376143372-aaac3c9c1a0f?w=800&h=600&fit=crop&auto=format",
     media: [
@@ -142,8 +130,6 @@ export const workItems: WorkItem[] = [
       en: "Regulatory-compliant design documentation",
       de: "Regulatorisch konforme Designdokumentation",
     },
-    year: 2024,
-    category: "Regulatory",
     thumbnail:
       "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop&auto=format",
     media: [
@@ -168,8 +154,6 @@ export const workItems: WorkItem[] = [
       en: "Photorealistic images and videos",
       de: "Fotorealistische Bilder und Videos",
     },
-    year: 2024,
-    category: "Visualisation",
     thumbnail:
       "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=600&fit=crop&auto=format",
     media: [
@@ -194,8 +178,6 @@ export const workItems: WorkItem[] = [
       en: "Apparatus and fixture construction",
       de: "Apparate- und Vorrichtungsbau",
     },
-    year: 2024,
-    category: "Engineering",
     thumbnail:
       "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=800&h=600&fit=crop&auto=format",
     media: [
@@ -220,8 +202,6 @@ export const workItems: WorkItem[] = [
       en: "From paper to modern CAD",
       de: "Vom Papier zur modernen CAD-Zeichnung",
     },
-    year: 2024,
-    category: "Documentation",
     thumbnail:
       "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&h=600&fit=crop&auto=format",
     media: [

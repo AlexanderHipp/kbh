@@ -140,3 +140,30 @@
 .dark {
   --grid-color: oklch(0.2 0 0);
 }
+
+/* Infinite slider animation */
+@keyframes infinite-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes infinite-scroll-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-infinite-scroll {
+  animation: infinite-scroll 30s linear infinite;
+}
+
+.animate-infinite-scroll-reverse {
+  animation: infinite-scroll-reverse 30s linear infinite;
+}

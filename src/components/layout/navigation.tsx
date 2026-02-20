@@ -42,14 +42,17 @@ export function Navigation() {
     // If not on home page, let the browser navigate to /#section
   };
 
-  const NavLinks = ({ onClick }: { onClick?: () => void }) => (
+  const NavLinks = ({ onClick, mobile }: { onClick?: () => void; mobile?: boolean }) => (
     <>
       {navSections.map((section) => (
         <Link
           key={section}
           href={`/#${section}`}
           onClick={(e) => handleNavClick(e, section, onClick)}
-          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          className={mobile
+            ? "text-lg font-medium text-foreground hover:text-muted-foreground transition-colors py-2"
+            : "text-sm text-muted-foreground hover:text-foreground transition-colors"
+          }
         >
           {t.nav[section]}
         </Link>
@@ -57,7 +60,10 @@ export function Navigation() {
       <Link
         href="/imprint"
         onClick={onClick}
-        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+        className={mobile
+          ? "text-lg font-medium text-foreground hover:text-muted-foreground transition-colors py-2"
+          : "text-sm text-muted-foreground hover:text-foreground transition-colors"
+        }
       >
         {t.nav.imprint}
       </Link>
@@ -88,12 +94,12 @@ export function Navigation() {
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[280px]">
+            <SheetContent side="right" className="w-[280px] bg-background">
               <SheetHeader>
                 <SheetTitle>Menu</SheetTitle>
               </SheetHeader>
-              <div className="flex flex-col gap-4 mt-6">
-                <NavLinks onClick={() => setIsOpen(false)} />
+              <div className="flex flex-col gap-2 mt-6 px-4">
+                <NavLinks onClick={() => setIsOpen(false)} mobile />
               </div>
             </SheetContent>
           </Sheet>

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is **kbh**, a Next.js 16 media gallery application with Supabase storage integration. Users can upload, view, and delete images, GIFs, and videos.
+**Kreativbüro Hipp** - A bilingual (EN/DE) portfolio website for a medical technology design agency based in Tuttlingen, Germany. Features project showcases, work galleries with modal views, and an admin interface for content management.
 
 ## Development Commands
 
@@ -20,47 +20,64 @@ pnpm start    # Start production server
 - **Next.js 16** with App Router and React 19
 - **TypeScript** with strict mode
 - **Tailwind CSS 4** with PostCSS
-- **Supabase** for media storage (bucket: `media`)
-- **shadcn/ui** configured with nova style and hugeicons
+- **Supabase** for projects and media storage
+- **shadcn/ui** with nova style (Radix UI primitives)
+- **Three.js** with @react-three/fiber for 3D hero scene
+- **Framer Motion** for animations
 
 ## Architecture
 
-### Data Flow
-Server component (`page.tsx`) fetches media from Supabase, passes to client component (`MediaPageClient`) which manages local state for uploads/deletes. This pattern enables SSR while supporting interactive updates without page refreshes.
+### Internationalization (i18n)
+Client-side locale switching without page reloads:
+- `src/lib/i18n/dictionary.ts` - All translations (EN/DE)
+- `src/lib/i18n/get-locale.ts` - Server-side locale detection from cookies
+- `LocaleProvider` + `useLocale()` hook for client components
+- Locale stored in cookie, toggled via `LanguageToggle` component
 
-### File Structure
+### Data Layer - Hybrid Static/Database
+Projects support both static fallback and Supabase storage:
+- `src/data/work-items.ts` - Static project definitions (fallback data)
+- `src/lib/supabase-projects.ts` - Project CRUD operations
+- `src/hooks/use-projects.ts` - React hooks with automatic fallback to static data when Supabase is empty or unavailable
+
+### Content Structure
 ```
-src/
-  app/
-    layout.tsx        # Root layout with Public Sans + JetBrains Mono fonts
-    page.tsx          # Server component - fetches initial media
-    globals.css       # Tailwind + shadcn styles
-  components/
-    media-page-client.tsx  # Client state wrapper
-    media-upload.tsx       # Drag-and-drop upload
-    media-gallery.tsx      # Grid display + modal
-  lib/
-    supabase.ts       # Supabase client + MediaItem type + CRUD operations
-    utils.ts          # cn() helper for Tailwind class merging
+Projects (Supabase: projects table)
+├── Bilingual fields: title_en/de, subtitle_en/de, description_en/de
+├── Metadata: year, category, client, role
+├── Media: thumbnail URL, linked via project_media table
+└── Admin: position (for ordering), is_published flag
+
+Project Media (Supabase: project_media table)
+├── Links media files to projects via project_slug
+└── Storage in Supabase bucket
 ```
 
-### Supabase Integration
-- Single client instance created at module load
-- Public bucket `media` stores all files
-- Files named with timestamp prefix: `{Date.now()}-{filename}`
-- Type detection from file extension (image/gif/video)
+### Page Structure
+- `/` - Home page with sections: Hero, ImageComparison, WorkGallery, Services, Process, Clients, Contact
+- `/work/[slug]` - Individual project detail pages
+- `/admin` - Content management interface
+- `/imprint` - Legal information
+
+### Component Patterns
+- Section components in `src/components/sections/` compose the home page
+- Layout components (Navigation, Footer) in `src/components/layout/`
+- Work display: `WorkGallery` → `WorkModal` (modal view) or `WorkDetailPage` (full page)
+- 3D components in `src/components/three/` using @react-three/fiber
 
 ## Environment Setup
 
-Copy `.env.example` to `.env.local` and configure:
+Copy `.env.example` to `.env.local`:
 - `NEXT_PUBLIC_SUPABASE_URL` - Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Supabase anon key
 
-Requires a public storage bucket named `media` in Supabase.
+Required Supabase tables: `projects`, `project_media`
+Required Supabase bucket: `media` (public)
 
 ## Conventions
 
-- Uses `@/` path alias for `src/` imports
-- Server components by default; `'use client'` only where needed
-- shadcn/ui components go in `src/components/ui/`
-- Remote images from `*.supabase.co` are allowed in next.config.ts
+- `@/` path alias for `src/` imports
+- Server components by default; `'use client'` only for interactivity
+- All container widths use `max-w-6xl` for consistency
+- shadcn/ui components in `src/components/ui/`
+- Remote images from `*.supabase.co` allowed in next.config.ts

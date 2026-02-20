@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getWorkBySlug, workItems, type WorkItem } from "@/data/work-items";
-import { getProjectBySlug, getProjects, type Project } from "@/lib/supabase-projects";
+import { getCategoryBySlug, getCategories, type Category } from "@/lib/supabase-categories";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { WorkDetailPage } from "./work-detail-page";
 
@@ -8,40 +8,36 @@ interface WorkPageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Convert Project to WorkItem format
-function projectToWorkItem(project: Project): WorkItem {
+// Convert Category to WorkItem format
+function categoryToWorkItem(category: Category): WorkItem {
   return {
-    slug: project.slug,
+    slug: category.slug,
     title: {
-      en: project.title_en,
-      de: project.title_de,
+      en: category.title_en,
+      de: category.title_de,
     },
-    subtitle: project.subtitle_en || project.subtitle_de
+    subtitle: category.subtitle_en || category.subtitle_de
       ? {
-          en: project.subtitle_en || "",
-          de: project.subtitle_de || "",
+          en: category.subtitle_en || "",
+          de: category.subtitle_de || "",
         }
       : undefined,
     description: {
-      en: project.description_en || "",
-      de: project.description_de || "",
+      en: category.description_en || "",
+      de: category.description_de || "",
     },
-    role: project.role || undefined,
-    client: project.client || undefined,
-    year: project.year || new Date().getFullYear(),
-    category: project.category || "",
-    thumbnail: project.thumbnail || "",
+    thumbnail: "", // Thumbnail handled by category.thumbnail_url
     media: [], // Media is loaded separately via WorkDetailWithMedia
   };
 }
 
 // Generate static params - fetch from Supabase with fallback
 export async function generateStaticParams() {
-  const projects = await getProjects();
+  const categories = await getCategories();
 
-  if (projects.length > 0) {
-    return projects.map((project) => ({
-      slug: project.slug,
+  if (categories.length > 0) {
+    return categories.map((category) => ({
+      slug: category.slug,
     }));
   }
 
@@ -57,11 +53,11 @@ export async function generateMetadata({ params }: WorkPageProps) {
   const locale = await getLocale();
 
   // Try Supabase first
-  const project = await getProjectBySlug(slug);
+  const category = await getCategoryBySlug(slug);
 
-  if (project) {
-    const title = locale === "de" ? project.title_de : project.title_en;
-    const description = locale === "de" ? project.description_de : project.description_en;
+  if (category) {
+    const title = locale === "de" ? category.title_de : category.title_en;
+    const description = locale === "de" ? category.description_de : category.description_en;
 
     return {
       title: `${title} | Studio`,
@@ -87,10 +83,10 @@ export default async function WorkPage({ params }: WorkPageProps) {
   const locale = await getLocale();
 
   // Try Supabase first
-  const project = await getProjectBySlug(slug);
+  const category = await getCategoryBySlug(slug);
 
-  if (project) {
-    const item = projectToWorkItem(project);
+  if (category) {
+    const item = categoryToWorkItem(category);
     return <WorkDetailPage item={item} locale={locale} />;
   }
 

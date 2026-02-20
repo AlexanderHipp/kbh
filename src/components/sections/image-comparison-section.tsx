@@ -11,24 +11,27 @@ export function ImageComparisonSection() {
   const { t } = useLocale();
 
   return (
-    <section className="py-24 bg-muted/30">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <h2 className="text-3xl font-semibold tracking-tight text-center mb-12">
+    <section className="py-24 ">
+      <div className="container mx-auto px-4 ">
+        <h2 className="text-3xl font-semibold tracking-tight mb-4">
           {t.imageComparison.title}
         </h2>
+        <p className="text-lg text-muted-foreground mb-12 max-w-2xl">
+          {t.imageComparison.subtitle}
+        </p>
 
-        <div className="relative aspect-[16/9] max-w-4xl mx-auto rounded-lg overflow-hidden">
+        <div className="relative aspect-square mx-auto rounded-lg overflow-hidden">
           <ImageComparison className="h-full w-full">
-            {/* Left image (shown on right side of slider) */}
+            {/* 3D rendered product - shown on left side */}
             <ImageComparisonImage
-              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=675&fit=crop&auto=format"
-              alt="Before"
+              src="/images/right.jpeg"
+              alt="3D rendered medical instrument"
               position="left"
             />
-            {/* Right image (shown on left side of slider) */}
+            {/* CAD wireframe - revealed on right side */}
             <ImageComparisonImage
-              src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=675&fit=crop&auto=format"
-              alt="After"
+              src="/images/left.jpeg"
+              alt="CAD wireframe design"
               position="right"
             />
             <ImageComparisonSlider className="bg-white/90 backdrop-blur-sm shadow-lg">

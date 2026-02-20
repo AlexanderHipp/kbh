@@ -12,12 +12,14 @@ export default function Home() {
     <>
       <main>
         <Hero />
-        <ImageComparisonSection />
-        <WorkGallery />
-        <Services />
-        <Process />
-        <Clients />
-        <Contact />
+        <div className="container mx-auto px-4 max-w-6xl border border-muted/80 border-l-2 border-r-2 border-t-0 border-b-0 ">
+          <ImageComparisonSection />
+          <Clients />
+          <WorkGallery />
+          <Services />
+          <Process />
+          <Contact />
+        </div>
       </main>
       <Footer />
     </>
