@@ -1,23 +1,25 @@
-import { getMediaItems } from "@/lib/supabase";
-import { MediaPageClient } from "@/components/media-page-client";
+import { Hero } from "@/components/sections/hero";
+import { ImageComparisonSection } from "@/components/sections/image-comparison-section";
+import { WorkGallery } from "@/components/sections/work-gallery";
+import { Services } from "@/components/sections/services";
+import { Process } from "@/components/sections/process";
+import { Clients } from "@/components/sections/clients";
+import { Contact } from "@/components/sections/contact";
+import { Footer } from "@/components/layout/footer";
 
-export default async function Home() {
-  const media = await getMediaItems();
-
+export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
-      <main className="container mx-auto px-4 py-8 max-w-6xl">
-        <header className="mb-8">
-          <h1 className="text-3xl font-semibold tracking-tight">
-            Media Gallery
-          </h1>
-          <p className="text-muted-foreground mt-2">
-            Upload and manage your images, GIFs, and videos
-          </p>
-        </header>
-
-        <MediaPageClient initialMedia={media} />
+    <>
+      <main>
+        <Hero />
+        <ImageComparisonSection />
+        <WorkGallery />
+        <Services />
+        <Process />
+        <Clients />
+        <Contact />
       </main>
-    </div>
+      <Footer />
+    </>
   );
 }

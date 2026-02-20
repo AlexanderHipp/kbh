@@ -1,33 +1,34 @@
 import type { Metadata } from "next";
-import { Public_Sans, JetBrains_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
+import { getLocale } from "@/lib/i18n/get-locale";
+import { Providers } from "@/components/providers";
+import { Navigation } from "@/components/layout/navigation";
 import "./globals.css";
 
-const publicSans = Public_Sans({
+const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "kbh",
-  description: "A Next.js application",
+  title: "Studio | Visual Production",
+  description: "Minimal production. Maximum clarity. From concept to a coherent series of visuals.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+
   return (
-    <html lang="en">
-      <body
-        className={`${publicSans.variable} ${jetbrainsMono.variable} antialiased`}
-      >
-        {children}
+    <html lang={locale} suppressHydrationWarning>
+      <body className={`${inter.variable} font-sans antialiased`}>
+        <Providers locale={locale}>
+          <Navigation />
+          {children}
+        </Providers>
       </body>
     </html>
   );

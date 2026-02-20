@@ -124,3 +124,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Grid background */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+:root {
+  --grid-color: oklch(0.95 0 0);
+}
+
+.dark {
+  --grid-color: oklch(0.2 0 0);
+}
