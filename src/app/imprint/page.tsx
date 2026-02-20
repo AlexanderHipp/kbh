@@ -18,9 +18,9 @@ export default async function ImprintPage() {
             <section className="mb-8">
               <h2 className="text-xl font-medium mb-4">{t.imprint.responsible}</h2>
               <address className="not-italic text-muted-foreground">
-                <p>Studio GmbH</p>
-                <p>Musterstraße 123</p>
-                <p>10115 Berlin</p>
+                <p>Kreativbüro Hipp</p>
+                <p>Untere Vorstadt 29</p>
+                <p>78532 Tuttlingen</p>
                 <p>Germany</p>
               </address>
             </section>
@@ -28,8 +28,8 @@ export default async function ImprintPage() {
             <section className="mb-8">
               <h2 className="text-xl font-medium mb-4">{t.imprint.contact}</h2>
               <div className="text-muted-foreground">
-                <p>Email: hello@studio.com</p>
-                <p>Phone: +49 30 12345678</p>
+                <p>Email: info@kbh-hipp.de</p>
+                <p>Phone: +49 7461 / 1716103</p>
               </div>
             </section>
 

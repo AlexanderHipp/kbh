@@ -9,6 +9,9 @@ if (supabaseUrl && supabaseAnonKey) {
   supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
 }
 
+// Export the supabase client for use in other modules
+export const supabase = supabaseClient;
+
 function getSupabase(): SupabaseClient | null {
   return supabaseClient;
 }

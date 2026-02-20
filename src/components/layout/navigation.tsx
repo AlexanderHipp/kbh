@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import { useLocale } from "@/lib/i18n";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -20,18 +21,38 @@ const navSections = ["work", "about", "services", "contact"] as const;
 export function Navigation() {
   const { t } = useLocale();
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    section: string,
+    callback?: () => void
+  ) => {
+    callback?.();
+
+    // If on home page, handle smooth scroll manually
+    if (isHomePage) {
+      e.preventDefault();
+      const element = document.getElementById(section);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+    // If not on home page, let the browser navigate to /#section
+  };
 
   const NavLinks = ({ onClick }: { onClick?: () => void }) => (
     <>
       {navSections.map((section) => (
-        <a
+        <Link
           key={section}
-          href={`#${section}`}
-          onClick={onClick}
+          href={`/#${section}`}
+          onClick={(e) => handleNavClick(e, section, onClick)}
           className="text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
           {t.nav[section]}
-        </a>
+        </Link>
       ))}
       <Link
         href="/imprint"
@@ -50,7 +71,7 @@ export function Navigation() {
           href="/"
           className="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity"
         >
-          Studio
+          Kreativbüro Hipp
         </Link>
 
         <div className="flex items-center gap-1 sm:gap-4">

@@ -11,8 +11,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Studio | Visual Production",
-  description: "Minimal production. Maximum clarity. From concept to a coherent series of visuals.",
+  title: "Kreativbüro Hipp | Medical Technology Design",
+  description: "Solutions for innovative medical technology products of tomorrow. Located in Tuttlingen – the heart of the world centre of medical technology.",
 };
 
 export default async function RootLayout({

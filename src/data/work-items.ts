@@ -1,5 +1,5 @@
 export interface WorkMedia {
-  type: "image" | "video";
+  type: "image" | "gif" | "video";
   src: string;
   alt?: string;
   poster?: string;
@@ -29,211 +29,211 @@ export interface WorkItem {
 
 export const workItems: WorkItem[] = [
   {
-    slug: "apparatebau",
+    slug: "medical-instruments",
     title: {
-      en: "Apparatebau",
-      de: "Apparatebau",
+      en: "Medical Instruments",
+      de: "Medizinische Instrumente",
     },
     subtitle: {
-      en: "Visual documentation of precision engineering",
-      de: "Visuelle Dokumentation von Präzisionstechnik",
+      en: "Classic designs with modern 3D engineering",
+      de: "Klassische Designs mit moderner 3D-Technik",
     },
-    role: "Lead Photographer",
-    client: "Industrial Corp.",
     year: 2024,
-    category: "Industrial Photography",
+    category: "Product Design",
+    thumbnail:
+      "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?w=800&h=600&fit=crop&auto=format",
+    media: [
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?w=1200&h=800&fit=crop&auto=format",
+        alt: "Medical instruments",
+      },
+    ],
+    description: {
+      en: "Surgeons in the Medical Valley desire classic instrument designs. We use modern 3D design to realise such projects, combining traditional craftsmanship with cutting-edge engineering.",
+      de: "Chirurgen im Medical Valley wünschen sich klassische Instrumentendesigns. Wir setzen moderne 3D-Konstruktion ein, um solche Projekte zu realisieren und traditionelles Handwerk mit modernster Technik zu verbinden.",
+    },
+  },
+  {
+    slug: "containers",
+    title: {
+      en: "Containers",
+      de: "Behälter",
+    },
+    subtitle: {
+      en: "From transport boxes to sterilisation containers",
+      de: "Von Transportboxen bis zu Sterilisationsbehältern",
+    },
+    year: 2024,
+    category: "Product Design",
+    thumbnail:
+      "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&h=600&fit=crop&auto=format",
+    media: [
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=1200&h=800&fit=crop&auto=format",
+        alt: "Medical containers",
+      },
+    ],
+    description: {
+      en: "Designing containers for safely transporting and storing implants and instruments is essential. Our designs range from simple transport boxes to complex sterilisation containers that ensure proper sterilisation processes.",
+      de: "Die Konstruktion von Behältern für den sicheren Transport und die Lagerung von Implantaten und Instrumenten ist essenziell. Unsere Designs reichen von einfachen Transportboxen bis zu komplexen Sterilisationsbehältern.",
+    },
+  },
+  {
+    slug: "implants",
+    title: {
+      en: "Implants",
+      de: "Implantate",
+    },
+    subtitle: {
+      en: "Collaborative development for better solutions",
+      de: "Kollaborative Entwicklung für bessere Lösungen",
+    },
+    year: 2024,
+    category: "Development",
+    thumbnail:
+      "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&h=600&fit=crop&auto=format",
+    media: [
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1200&h=800&fit=crop&auto=format",
+        alt: "Medical implants",
+      },
+    ],
+    description: {
+      en: "Demand for better and more sophisticated implants is growing. We collaborate with customers to develop implants, and due to the complexity of such projects, detailed conversations are often required to achieve optimal results.",
+      de: "Die Nachfrage nach besseren und ausgefeilteren Implantaten wächst. Wir arbeiten mit Kunden zusammen, um Implantate zu entwickeln, und aufgrund der Komplexität solcher Projekte sind oft detaillierte Gespräche erforderlich.",
+    },
+  },
+  {
+    slug: "3d-printing",
+    title: {
+      en: "3D Printing",
+      de: "3D-Druck",
+    },
+    subtitle: {
+      en: "Rapid prototyping with FDM technology",
+      de: "Schnelles Prototyping mit FDM-Technologie",
+    },
+    year: 2024,
+    category: "Prototyping",
+    thumbnail:
+      "https://images.unsplash.com/photo-1631376143372-aaac3c9c1a0f?w=800&h=600&fit=crop&auto=format",
+    media: [
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1631376143372-aaac3c9c1a0f?w=1200&h=800&fit=crop&auto=format",
+        alt: "3D printing",
+      },
+    ],
+    description: {
+      en: "We use a state-of-the-art Ultimaker 3D printer. With Fused Deposition Modelling (FDM) technology, we quickly print functional samples of implants, instruments, or containers in various materials such as Nylon (PA), ABS, PET, PLA, PP, PVA, and TPU.",
+      de: "Wir verwenden einen hochmodernen Ultimaker 3D-Drucker. Mit Fused Deposition Modelling (FDM) Technologie drucken wir schnell Funktionsmuster von Implantaten, Instrumenten oder Behältern in verschiedenen Materialien wie Nylon (PA), ABS, PET, PLA, PP, PVA und TPU.",
+    },
+  },
+  {
+    slug: "mdr-fda-development",
+    title: {
+      en: "MDR/FDA Development",
+      de: "MDR/FDA-Entwicklung",
+    },
+    subtitle: {
+      en: "Regulatory-compliant design documentation",
+      de: "Regulatorisch konforme Designdokumentation",
+    },
+    year: 2024,
+    category: "Regulatory",
+    thumbnail:
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop&auto=format",
+    media: [
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=800&fit=crop&auto=format",
+        alt: "Documentation",
+      },
+    ],
+    description: {
+      en: "We help create and define design history files according to MDR or FDA requirements. Our structured process covers all phases from definition through concept, development, qualification, to prototype.",
+      de: "Wir helfen bei der Erstellung und Definition von Design History Files gemäß MDR- oder FDA-Anforderungen. Unser strukturierter Prozess deckt alle Phasen von der Definition über Konzept, Entwicklung, Qualifikation bis zum Prototyp ab.",
+    },
+  },
+  {
+    slug: "3d-visualisation",
+    title: {
+      en: "3D Visualisation",
+      de: "3D-Visualisierung",
+    },
+    subtitle: {
+      en: "Photorealistic images and videos",
+      de: "Fotorealistische Bilder und Videos",
+    },
+    year: 2024,
+    category: "Visualisation",
+    thumbnail:
+      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=600&fit=crop&auto=format",
+    media: [
+      {
+        type: "image",
+        src: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200&h=800&fit=crop&auto=format",
+        alt: "3D visualisation",
+      },
+    ],
+    description: {
+      en: "Any imaginable real or unreal scene can be recreated in 3D. This produces images or videos for product documentation and marketing, allowing realistic assessment of final products before production.",
+      de: "Jede vorstellbare reale oder unreale Szene kann in 3D nachgebildet werden. Dies erzeugt Bilder oder Videos für Produktdokumentation und Marketing und ermöglicht eine realistische Beurteilung der Endprodukte vor der Produktion.",
+    },
+  },
+  {
+    slug: "automation-fixtures",
+    title: {
+      en: "Automation & Fixtures",
+      de: "Automation & Vorrichtungen",
+    },
+    subtitle: {
+      en: "Apparatus and fixture construction",
+      de: "Apparate- und Vorrichtungsbau",
+    },
+    year: 2024,
+    category: "Engineering",
     thumbnail:
       "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=800&h=600&fit=crop&auto=format",
     media: [
       {
         type: "image",
         src: "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=1200&h=800&fit=crop&auto=format",
-        alt: "Industrial machinery",
-      },
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1200&h=800&fit=crop&auto=format",
-        alt: "Factory detail",
-      },
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1200&h=800&fit=crop&auto=format",
-        alt: "Manufacturing process",
+        alt: "Automation equipment",
       },
     ],
     description: {
-      en: "A comprehensive visual documentation of precision engineering and industrial craftsmanship. This series captures the beauty of mechanical components and manufacturing excellence.",
-      de: "Eine umfassende visuelle Dokumentation von Präzisionstechnik und industrieller Handwerkskunst. Diese Serie fängt die Schönheit mechanischer Komponenten und Fertigungsexzellenz ein.",
+      en: "Cost-effective production in manufacturing requires optimised automation. We design fixtures that position series or prototypes on machines with reproducible accuracy, supporting cost-effective creation through years of experience.",
+      de: "Kosteneffektive Fertigung erfordert optimierte Automatisierung. Wir konstruieren Vorrichtungen, die Serien oder Prototypen mit reproduzierbarer Genauigkeit auf Maschinen positionieren und durch jahrelange Erfahrung eine wirtschaftliche Fertigung unterstützen.",
     },
   },
   {
-    slug: "nordic-essence",
+    slug: "drawing-production",
     title: {
-      en: "Nordic Essence",
-      de: "Nordische Essenz",
+      en: "Drawing Production",
+      de: "Zeichnungserstellung",
     },
     subtitle: {
-      en: "Celebrating Scandinavian design principles",
-      de: "Eine Hommage an skandinavische Designprinzipien",
+      en: "From paper to modern CAD",
+      de: "Vom Papier zur modernen CAD-Zeichnung",
     },
-    role: "Creative Director",
-    client: "Design Studio",
     year: 2024,
-    category: "Product Photography",
+    category: "Documentation",
     thumbnail:
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop&auto=format",
+      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&h=600&fit=crop&auto=format",
     media: [
       {
         type: "image",
-        src: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&h=800&fit=crop&auto=format",
-        alt: "Minimalist interior",
-      },
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&h=800&fit=crop&auto=format",
-        alt: "Design furniture",
-      },
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=1200&h=800&fit=crop&auto=format",
-        alt: "Product detail",
+        src: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&h=800&fit=crop&auto=format",
+        alt: "Technical drawings",
       },
     ],
     description: {
-      en: "Celebrating Scandinavian design principles through carefully composed imagery. Clean lines, natural materials, and thoughtful simplicity define this product series.",
-      de: "Eine Hommage an skandinavische Designprinzipien durch sorgfältig komponierte Bilder. Klare Linien, natürliche Materialien und durchdachte Schlichtheit definieren diese Produktserie.",
-    },
-  },
-  {
-    slug: "urban-rhythm",
-    title: {
-      en: "Urban Rhythm",
-      de: "Urbaner Rhythmus",
-    },
-    client: "Architecture Firm",
-    year: 2023,
-    category: "Architecture",
-    thumbnail:
-      "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&h=600&fit=crop&auto=format",
-    media: [
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&h=800&fit=crop&auto=format",
-        alt: "Modern building facade",
-      },
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1545324418-cc6a8b25d7b4?w=1200&h=800&fit=crop&auto=format",
-        alt: "Architectural detail",
-      },
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?w=1200&h=800&fit=crop&auto=format",
-        alt: "Urban landscape",
-      },
-    ],
-    description: {
-      en: "Exploring the intersection of architecture and daily life in urban environments. This series documents the visual rhythm created by modern structures and the spaces between them.",
-      de: "Eine Erkundung der Schnittstelle von Architektur und Alltag in urbanen Umgebungen. Diese Serie dokumentiert den visuellen Rhythmus moderner Strukturen und der Räume zwischen ihnen.",
-    },
-  },
-  {
-    slug: "natural-forms",
-    title: {
-      en: "Natural Forms",
-      de: "Natürliche Formen",
-    },
-    client: "Botanical Garden",
-    year: 2023,
-    category: "Nature Photography",
-    thumbnail:
-      "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=800&h=600&fit=crop&auto=format",
-    media: [
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1200&h=800&fit=crop&auto=format",
-        alt: "Botanical detail",
-      },
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1200&h=800&fit=crop&auto=format",
-        alt: "Flower macro",
-      },
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1462275646964-a0e3571f4f77?w=1200&h=800&fit=crop&auto=format",
-        alt: "Plant texture",
-      },
-    ],
-    description: {
-      en: "A study of organic patterns and textures found in nature. Through macro photography, this series reveals the intricate beauty hidden in botanical subjects.",
-      de: "Eine Studie organischer Muster und Texturen in der Natur. Durch Makrofotografie enthüllt diese Serie die verborgene Schönheit botanischer Motive.",
-    },
-  },
-  {
-    slug: "quiet-moments",
-    title: {
-      en: "Quiet Moments",
-      de: "Stille Momente",
-    },
-    client: "Lifestyle Brand",
-    year: 2024,
-    category: "Lifestyle",
-    thumbnail:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&auto=format",
-    media: [
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=800&fit=crop&auto=format",
-        alt: "Morning coffee",
-      },
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&h=800&fit=crop&auto=format",
-        alt: "Cafe scene",
-      },
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1200&h=800&fit=crop&auto=format",
-        alt: "Coffee detail",
-      },
-    ],
-    description: {
-      en: "Capturing the beauty in everyday rituals and moments of pause. This lifestyle series celebrates the art of slowing down and finding peace in simple pleasures.",
-      de: "Die Schönheit alltäglicher Rituale und Momente der Ruhe einfangen. Diese Lifestyle-Serie feiert die Kunst des Verlangsamens und das Finden von Frieden in einfachen Freuden.",
-    },
-  },
-  {
-    slug: "material-study",
-    title: {
-      en: "Material Study",
-      de: "Materialstudie",
-    },
-    client: "Textile Company",
-    year: 2023,
-    category: "Product Photography",
-    thumbnail:
-      "https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&h=600&fit=crop&auto=format",
-    media: [
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1558171813-4c088753af8f?w=1200&h=800&fit=crop&auto=format",
-        alt: "Fabric texture",
-      },
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=1200&h=800&fit=crop&auto=format",
-        alt: "Material detail",
-      },
-      {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=1200&h=800&fit=crop&auto=format",
-        alt: "Textile close-up",
-      },
-    ],
-    description: {
-      en: "An exploration of textiles and materials through close-up photography. This series highlights the tactile qualities and craftsmanship behind premium fabrics.",
-      de: "Eine Erkundung von Textilien und Materialien durch Nahaufnahmen. Diese Serie hebt die haptischen Qualitäten und Handwerkskunst hochwertiger Stoffe hervor.",
+      en: "Many companies still have drawings on paper. We convert these into modern CAD, 2D or 3D drawings. Our technical illustrators work across metal and plastic processing industries, including appraisal drawings with quality-relevant data.",
+      de: "Viele Unternehmen haben noch Zeichnungen auf Papier. Wir wandeln diese in moderne CAD-, 2D- oder 3D-Zeichnungen um. Unsere technischen Zeichner arbeiten in der Metall- und Kunststoffverarbeitung, einschließlich Prüfzeichnungen mit qualitätsrelevanten Daten.",
     },
   },
 ];
