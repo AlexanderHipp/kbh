@@ -1,6 +1,12 @@
 "use client";
 
 import { useLocale } from "@/lib/i18n";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 
 export function Process() {
   const { t } = useLocale();
@@ -12,17 +18,19 @@ export function Process() {
           {t.process.title}
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {t.process.steps.map((step, index) => (
-            <div key={index} className="space-y-3">
-              <span className="text-4xl font-light text-muted-foreground/50">
-                {step.number}
-              </span>
-              <h3 className="text-lg font-medium">{step.title}</h3>
-              <p className="text-sm text-muted-foreground">
-                {step.description}
-              </p>
-            </div>
+            <Card key={index} className="rounded-sm border-border shadow-none">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center mb-2">
+                  <span className="text-xl font-semibold text-foreground">
+                    {step.number}
+                  </span>
+                </div>
+                <CardTitle>{step.title}</CardTitle>
+                <CardDescription>{step.description}</CardDescription>
+              </CardHeader>
+            </Card>
           ))}
         </div>
       </div>

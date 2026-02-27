@@ -10,7 +10,7 @@ export function LanguageToggle() {
     <Button
       variant="ghost"
       size="sm"
-      className="h-8 px-2 text-xs font-medium uppercase"
+      className="h-8 px-2 text-xs font-medium uppercase text-muted-foreground hover:text-foreground hover:bg-transparent"
       onClick={() => setLocale(locale === "en" ? "de" : "en")}
     >
       {locale === "en" ? "DE" : "EN"}

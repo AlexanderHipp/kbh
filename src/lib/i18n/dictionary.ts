@@ -76,10 +76,22 @@ export const dictionary = {
     },
     imprint: {
       title: "Imprint",
+      legalNotice: "Information according to § 5 TMG",
       responsible: "Responsible for content",
+      owner: "Owner",
       contact: "Contact",
-      disclaimer: "Disclaimer",
-      disclaimerText: "Despite careful content control, we assume no liability for the content of external links. The operators of the linked pages are solely responsible for their content.",
+      liabilityContent: "Liability for content",
+      liabilityContentText:
+        "The contents of our pages were created with the utmost care. However, we cannot guarantee the accuracy, completeness, or timeliness of the content. As a service provider, we are responsible for our own content on these pages in accordance with general laws. We are not obligated to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity.",
+      liabilityLinks: "Liability for links",
+      liabilityLinksText:
+        "Our website contains links to external third-party websites over whose content we have no control. Therefore, we cannot assume any liability for this external content. The respective provider or operator of the linked pages is always responsible for the content of the linked pages. The linked pages were checked for possible legal violations at the time of linking. Illegal content was not recognizable at the time of linking. However, permanent monitoring of the content of the linked pages is not reasonable without concrete evidence of a legal violation. Upon becoming aware of legal violations, we will remove such links immediately.",
+      euDispute: "EU dispute resolution",
+      euDisputeText:
+        "The European Commission provides a platform for online dispute resolution (OS): ",
+      euDisputeLink: "https://ec.europa.eu/consumers/odr/",
+      euDisputeSuffix:
+        ". We are not obliged or willing to participate in dispute resolution proceedings before a consumer arbitration board.",
     },
     footer: {
       copyright: "All rights reserved.",
@@ -160,10 +172,22 @@ export const dictionary = {
     },
     imprint: {
       title: "Impressum",
+      legalNotice: "Angaben gemäß § 5 TMG",
       responsible: "Verantwortlich für den Inhalt",
+      owner: "Inhaber",
       contact: "Kontakt",
-      disclaimer: "Haftungsausschluss",
-      disclaimerText: "Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.",
+      liabilityContent: "Haftung für Inhalte",
+      liabilityContentText:
+        "Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Eine Überwachung der übermittelten oder gespeicherten fremden Informationen oder eine Forschung nach Umständen, die auf eine rechtswidrige Tätigkeit hinweisen, ist uns nicht zumutbar.",
+      liabilityLinks: "Haftung für Links",
+      liabilityLinksText:
+        "Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.",
+      euDispute: "EU-Streitschlichtung",
+      euDisputeText:
+        "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: ",
+      euDisputeLink: "https://ec.europa.eu/consumers/odr/",
+      euDisputeSuffix:
+        ". Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.",
     },
     footer: {
       copyright: "Alle Rechte vorbehalten.",
@@ -231,10 +255,18 @@ export interface Dictionary {
   };
   imprint: {
     title: string;
+    legalNotice: string;
     responsible: string;
+    owner: string;
     contact: string;
-    disclaimer: string;
-    disclaimerText: string;
+    liabilityContent: string;
+    liabilityContentText: string;
+    liabilityLinks: string;
+    liabilityLinksText: string;
+    euDispute: string;
+    euDisputeText: string;
+    euDisputeLink: string;
+    euDisputeSuffix: string;
   };
   footer: {
     copyright: string;
