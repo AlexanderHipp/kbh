@@ -15,7 +15,7 @@ export function Hero() {
       <div className="relative z-10 mx-auto flex min-h-[860px] flex-col border-x border-border/70">
         <div className="flex flex-1 flex-col">
           <div className="flex min-h-[410px] flex-col items-center justify-center px-6 text-center ">
-            <h1 className="text-6xl max-w-3xl mx-auto font-semibold">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05]">
               {t.hero.headline}
             </h1>
             <p className="mt-6 max-w-2xl text-sm text-muted-foreground sm:text-base">
@@ -36,7 +36,7 @@ export function Hero() {
           </div>
 
           <div className="flex flex-1 items-stretch px-4 py-6 sm:px-8 sm:py-8 max-w-6xl mx-auto w-full">
-            <Card className="w-full overflow-hidden  border-border/70 bg-card p-0 shadow-none">
+            <Card className="w-full overflow-hidden p-0 shadow-none border-2 border-border">
               <div className="relative aspect-video min-h-[340px] w-full overflow-hidden ">
                 <Image
                   src="/bg.png"
