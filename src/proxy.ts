@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 const GERMAN_COUNTRIES = ["DE", "AT", "CH"];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const response = NextResponse.next();
 
   // Skip if locale cookie already set
