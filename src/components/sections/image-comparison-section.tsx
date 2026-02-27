@@ -46,7 +46,13 @@ export function ImageComparisonSection() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M8 9l4-4 4 4m0 6l-4 4-4-4"
+                    d="M9 17l-5-5 5-5"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 7l5 5-5 5"
                   />
                 </svg>
               </div>
