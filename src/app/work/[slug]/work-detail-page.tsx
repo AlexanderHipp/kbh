@@ -16,7 +16,7 @@ export function WorkDetailPage({ item, locale }: WorkDetailPageProps) {
     <>
       <Navigation />
       <main className="pt-20 pb-24">
-        <div className="container mx-auto px-4 max-w-6xl">
+        <div className="container mx-auto px-4 max-w-6xl border-x-2 border-muted/80">
           <WorkDetailWithMedia item={item} locale={locale} isModal={false} />
         </div>
       </main>

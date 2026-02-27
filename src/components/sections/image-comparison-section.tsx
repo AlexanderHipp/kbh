@@ -20,7 +20,7 @@ export function ImageComparisonSection() {
           {t.imageComparison.subtitle}
         </p>
 
-        <div className="relative aspect-square mx-auto rounded-lg overflow-hidden">
+        <div className="relative aspect-square mx-auto rounded-sm overflow-hidden">
           <ImageComparison className="h-full w-full">
             {/* 3D rendered product - shown on left side */}
             <ImageComparisonImage

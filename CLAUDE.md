@@ -59,7 +59,8 @@ Category Media (Supabase: category_media table)
 - `/` - Home page with sections: Hero, ImageComparison, WorkGallery, Services, Process, Clients, Contact
 - `/work/[slug]` - Individual category detail pages
 - `/admin` - Content management interface (password protected)
-- `/imprint` - Legal information
+- `/imprint` - Legal information (Impressum)
+- `/privacy` - Privacy policy (Datenschutz)
 
 ### Component Patterns
 - Section components in `src/components/sections/` compose the home page
@@ -80,6 +81,9 @@ Copy `.env.example` to `.env.local`:
 Required Supabase tables: `categories`, `category_media`
 Required Supabase bucket: `media` (public)
 
+### Business Data
+- `src/lib/imprint-data.ts` - Company contact info (email, phone, address) used across imprint, privacy, and contact sections
+
 ## Conventions
 
 - `@/` path alias for `src/` imports
@@ -87,3 +91,4 @@ Required Supabase bucket: `media` (public)
 - All container widths use `max-w-6xl` for consistency
 - shadcn/ui components in `src/components/ui/`
 - Remote images from `*.supabase.co` allowed in next.config.ts
+- Geist font family via `next/font`

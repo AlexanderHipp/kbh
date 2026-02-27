@@ -16,6 +16,12 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-6">
             <Link
+              href="/privacy"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {t.nav.privacy}
+            </Link>
+            <Link
               href="/imprint"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >

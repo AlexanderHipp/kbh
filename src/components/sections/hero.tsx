@@ -12,6 +12,10 @@ const HeroScene = dynamic(
 
 export function Hero() {
   const { t } = useLocale();
+  const words = t.hero.headline.trim().split(/\s+/);
+  const splitIndex = Math.ceil(words.length / 2);
+  const headlineLineOne = words.slice(0, splitIndex).join(" ");
+  const headlineLineTwo = words.slice(splitIndex).join(" ");
 
   return (
     <section className="relative h-[800px] sm:h-[900px] lg:h-[1000px] flex items-center justify-center overflow-hidden border border-muted/80 border-b-2">
@@ -19,11 +23,12 @@ export function Hero() {
         <HeroScene />
       </Suspense>
 
-      <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight mb-6">
-          {t.hero.headline}
+      <div className="container mx-auto px-4 max-w-5xl text-center relative z-10">
+        <h1 className="mx-auto max-w-[14ch] text-[clamp(3.25rem,11vw,8.5rem)] leading-[0.9] tracking-[-0.03em] font-semibold mb-8">
+          <span className="block">{headlineLineOne}</span>
+          <span className="block">{headlineLineTwo}</span>
         </h1>
-        <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
+        <p className="text-base sm:text-lg md:text-xl text-foreground mb-10 max-w-3xl mx-auto bg-background/75 backdrop-blur-sm border border-border/60 rounded-md px-4 py-3">
           {t.hero.subheadline}
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

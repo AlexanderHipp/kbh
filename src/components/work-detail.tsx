@@ -52,7 +52,7 @@ export function WorkDetail({ item, locale, isModal = false, onClose }: WorkDetai
 
       {/* Hero media */}
       {item.media[0] && (
-        <div className="relative aspect-[3/2] rounded-lg overflow-hidden bg-muted mb-8">
+        <div className="relative aspect-[3/2] rounded-sm overflow-hidden bg-muted mb-8">
           {item.media[0].type === "video" ? (
             <video
               src={item.media[0].src}
@@ -92,7 +92,7 @@ export function WorkDetail({ item, locale, isModal = false, onClose }: WorkDetai
           {item.media.slice(1).map((media, index) => (
             <div
               key={index}
-              className="relative aspect-[3/2] rounded-lg overflow-hidden bg-muted"
+              className="relative aspect-[3/2] rounded-sm overflow-hidden bg-muted"
             >
               {media.type === "video" ? (
                 <video

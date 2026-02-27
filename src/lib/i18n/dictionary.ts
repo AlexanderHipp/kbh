@@ -8,22 +8,26 @@ export const dictionary = {
       services: "Services",
       contact: "Contact",
       imprint: "Imprint",
+      privacy: "Privacy",
     },
     hero: {
-      headline: "Solutions for innovative medical technology products of tomorrow.",
-      subheadline: "Located in Tuttlingen – the heart of the world centre of medical technology.",
+      headline: "From idea to series",
+      subheadline:
+        "Located in Tuttlingen – the heart of the world centre of medical technology. We accompany your product from concept to series production.",
       cta_primary: "View portfolio",
       cta_secondary: "Contact us",
     },
     imageComparison: {
       title: "From concept to series production",
-      subtitle: "We accompany your product through every development phase – from the initial idea to series-ready production.",
+      subtitle:
+        "We accompany your product through every development phase – from the initial idea to series-ready production.",
       labelLeft: "Concept",
       labelRight: "Production",
     },
     work: {
       title: "Portfolio",
-      subtitle: "A selection of our projects in medical technology, product design and development.",
+      subtitle:
+        "A selection of our projects in medical technology, product design and development.",
       openPage: "View details",
       viewProject: "View project",
     },
@@ -32,40 +36,66 @@ export const dictionary = {
       items: [
         {
           title: "Medical Engineering",
-          description: "Located in the heart of the world centre of medical technology – our customers benefit from our team's extensive experience.",
+          description:
+            "Located in the heart of the world centre of medical technology – our customers benefit from our team's extensive experience.",
         },
         {
           title: "Innovation",
-          description: "We help you implement promising ideas and turn them into market-ready products.",
+          description:
+            "We help you implement promising ideas and turn them into market-ready products.",
         },
         {
           title: "Development",
-          description: "We have the right tools and know-how to implement your visions with precision.",
+          description:
+            "We have the right tools and know-how to implement your visions with precision.",
         },
         {
           title: "Series Production",
-          description: "We don't stop at planning – we accompany you from concept through implementation and support your production.",
+          description:
+            "We don't stop at planning – we accompany you from concept through implementation and support your production.",
         },
       ],
     },
     process: {
       title: "Development Process",
       steps: [
-        { number: "01", title: "Definition", description: "Defining requirements and specifications" },
-        { number: "02", title: "Concept", description: "Developing the design concept" },
-        { number: "03", title: "Development", description: "3D modeling and engineering" },
-        { number: "04", title: "Qualification", description: "Testing and validation" },
-        { number: "05", title: "Prototype", description: "Functional samples and production" },
+        {
+          number: "01",
+          title: "Definition",
+          description: "Defining requirements and specifications",
+        },
+        {
+          number: "02",
+          title: "Concept",
+          description: "Developing the design concept",
+        },
+        {
+          number: "03",
+          title: "Development",
+          description: "3D modeling and engineering",
+        },
+        {
+          number: "04",
+          title: "Qualification",
+          description: "Testing and validation",
+        },
+        {
+          number: "05",
+          title: "Prototype",
+          description: "Functional samples and production",
+        },
       ],
     },
     clients: {
       title: "Trusted Partners",
-      subtitle: "We collaborate with leading companies in medical technology and manufacturing.",
+      subtitle:
+        "We collaborate with leading companies in medical technology and manufacturing.",
       list: ["Solidworks", "KeyShot", "AutoCAD", "Ultimaker 3D Printing"],
     },
     contact: {
       title: "Contact",
-      subtitle: "Interested in our services? Just write or call us for a non-binding enquiry.",
+      subtitle:
+        "Interested in our services? Just write or call us for a non-binding enquiry.",
       name: "Name",
       email: "Email",
       message: "Message",
@@ -73,6 +103,9 @@ export const dictionary = {
       namePlaceholder: "Your name",
       emailPlaceholder: "your@email.com",
       messagePlaceholder: "Tell us about your project...",
+      privacyConsentPrefix: "I have read the ",
+      privacyConsentSuffix:
+        " and agree to the processing of my data for this enquiry.",
     },
     imprint: {
       title: "Imprint",
@@ -104,22 +137,26 @@ export const dictionary = {
       services: "Leistungen",
       contact: "Kontakt",
       imprint: "Impressum",
+      privacy: "Datenschutz",
     },
     hero: {
-      headline: "Lösungen für innovative Medizintechnik-Produkte von Morgen.",
-      subheadline: "Im Herzen des Weltzentrums der Medizintechnik – Tuttlingen.",
+      headline: "Von der Idee zur Serie",
+      subheadline:
+        "Im Herzen des Weltzentrums der Medizintechnik – Tuttlingen. Wir begleiten Ihr Produkt vom Konzept bis zur Serienproduktion.",
       cta_primary: "Portfolio ansehen",
       cta_secondary: "Kontakt",
     },
     imageComparison: {
-      title: "Vom Konzept zur Serienproduktion",
-      subtitle: "Wir begleiten Ihr Produkt durch jede Entwicklungsphase – von der ersten Idee bis zur serienreifen Fertigung.",
+      title: "Vom Entwurf zur Serienreife",
+      subtitle:
+        "Wir führen Ihr Produkt strukturiert durch jede Phase – vom ersten Konzept über die Entwicklung bis zur serienreifen Fertigung.",
       labelLeft: "Konzept",
       labelRight: "Produktion",
     },
     work: {
       title: "Portfolio",
-      subtitle: "Eine Auswahl unserer Projekte in Medizintechnik, Produktdesign und Entwicklung.",
+      subtitle:
+        "Eine Auswahl unserer Projekte in Medizintechnik, Produktdesign und Entwicklung.",
       openPage: "Details ansehen",
       viewProject: "Projekt ansehen",
     },
@@ -128,40 +165,66 @@ export const dictionary = {
       items: [
         {
           title: "Medizintechnik",
-          description: "Im Herzen des Weltzentrums der Medizintechnik gelegen – unsere Kunden profitieren von der langjährigen Erfahrung unseres Teams.",
+          description:
+            "Im Herzen des Weltzentrums der Medizintechnik gelegen – unsere Kunden profitieren von der langjährigen Erfahrung unseres Teams.",
         },
         {
           title: "Innovation",
-          description: "Wir helfen Ihnen, vielversprechende Ideen umzusetzen und marktreife Produkte daraus zu machen.",
+          description:
+            "Wir helfen Ihnen, vielversprechende Ideen umzusetzen und marktreife Produkte daraus zu machen.",
         },
         {
           title: "Entwicklung",
-          description: "Wir haben die richtigen Werkzeuge und das Know-how, um Ihre Visionen präzise umzusetzen.",
+          description:
+            "Wir haben die richtigen Werkzeuge und das Know-how, um Ihre Visionen präzise umzusetzen.",
         },
         {
           title: "Serienproduktion",
-          description: "Wir hören nicht bei der Planung auf – wir begleiten Sie vom Konzept über die Umsetzung bis zur Unterstützung Ihrer Produktion.",
+          description:
+            "Wir hören nicht bei der Planung auf – wir begleiten Sie vom Konzept über die Umsetzung bis zur Unterstützung Ihrer Produktion.",
         },
       ],
     },
     process: {
       title: "Entwicklungsprozess",
       steps: [
-        { number: "01", title: "Definition", description: "Anforderungen und Spezifikationen definieren" },
-        { number: "02", title: "Konzept", description: "Designkonzept entwickeln" },
-        { number: "03", title: "Entwicklung", description: "3D-Modellierung und Engineering" },
-        { number: "04", title: "Qualifikation", description: "Prüfung und Validierung" },
-        { number: "05", title: "Prototyp", description: "Funktionsmuster und Produktion" },
+        {
+          number: "01",
+          title: "Definition",
+          description: "Anforderungen und Spezifikationen definieren",
+        },
+        {
+          number: "02",
+          title: "Konzept",
+          description: "Designkonzept entwickeln",
+        },
+        {
+          number: "03",
+          title: "Entwicklung",
+          description: "3D-Modellierung und Engineering",
+        },
+        {
+          number: "04",
+          title: "Qualifikation",
+          description: "Prüfung und Validierung",
+        },
+        {
+          number: "05",
+          title: "Prototyp",
+          description: "Funktionsmuster und Produktion",
+        },
       ],
     },
     clients: {
       title: "Vertrauensvolle Partner",
-      subtitle: "Wir arbeiten mit führenden Unternehmen in der Medizintechnik und Fertigung zusammen.",
+      subtitle:
+        "Wir arbeiten mit führenden Unternehmen in der Medizintechnik und Fertigung zusammen.",
       list: ["Solidworks", "KeyShot", "AutoCAD", "Ultimaker 3D-Druck"],
     },
     contact: {
       title: "Kontakt",
-      subtitle: "Interessiert an unseren Leistungen? Schreiben oder rufen Sie uns einfach an für eine unverbindliche Anfrage.",
+      subtitle:
+        "Interessiert an unseren Leistungen? Schreiben oder rufen Sie uns einfach an für eine unverbindliche Anfrage.",
       name: "Name",
       email: "E-Mail",
       message: "Nachricht",
@@ -169,6 +232,9 @@ export const dictionary = {
       namePlaceholder: "Ihr Name",
       emailPlaceholder: "ihre@email.de",
       messagePlaceholder: "Erzählen Sie uns von Ihrem Projekt...",
+      privacyConsentPrefix: "Ich habe die ",
+      privacyConsentSuffix:
+        " gelesen und stimme der Verarbeitung meiner Daten für diese Anfrage zu.",
     },
     imprint: {
       title: "Impressum",
@@ -203,6 +269,7 @@ export interface Dictionary {
     services: string;
     contact: string;
     imprint: string;
+    privacy: string;
   };
   hero: {
     headline: string;
@@ -252,6 +319,8 @@ export interface Dictionary {
     namePlaceholder: string;
     emailPlaceholder: string;
     messagePlaceholder: string;
+    privacyConsentPrefix: string;
+    privacyConsentSuffix: string;
   };
   imprint: {
     title: string;

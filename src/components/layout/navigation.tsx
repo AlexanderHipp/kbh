@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import { useLocale } from "@/lib/i18n";
@@ -57,16 +58,6 @@ export function Navigation() {
           {t.nav[section]}
         </Link>
       ))}
-      <Link
-        href="/imprint"
-        onClick={onClick}
-        className={mobile
-          ? "text-lg font-medium text-foreground hover:text-muted-foreground transition-colors py-2"
-          : "text-sm text-muted-foreground hover:text-foreground transition-colors"
-        }
-      >
-        {t.nav.imprint}
-      </Link>
     </>
   );
 
@@ -75,9 +66,16 @@ export function Navigation() {
       <nav className="container mx-auto flex h-14 items-center justify-between px-4 max-w-6xl">
         <Link
           href="/"
-          className="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity"
+          className="hover:opacity-80 transition-opacity"
         >
-          Kreativbüro Hipp
+          <Image
+            src="/kbh-logo.svg"
+            alt="Kreativbüro Hipp"
+            width={240}
+            height={20}
+            className="h-5 w-auto dark:invert"
+            priority
+          />
         </Link>
 
         <div className="flex items-center gap-1 sm:gap-4">

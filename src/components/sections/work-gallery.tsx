@@ -77,7 +77,7 @@ function WorkTile({ category, locale, onClick }: WorkTileProps) {
       onClick={onClick}
       className="group text-left w-full"
     >
-      <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-muted mb-4">
+      <div className="relative aspect-[4/3] rounded-sm overflow-hidden bg-muted mb-4">
         {category.thumbnail_url && (
           <Image
             src={category.thumbnail_url}
@@ -106,7 +106,7 @@ function WorkGallerySkeleton() {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
       {[...Array(4)].map((_, i) => (
         <div key={i} className="animate-pulse">
-          <div className="aspect-[4/3] rounded-lg bg-muted mb-4" />
+          <div className="aspect-[4/3] rounded-sm bg-muted mb-4" />
           <div className="h-5 w-32 bg-muted rounded mb-2" />
           <div className="h-4 w-24 bg-muted rounded" />
         </div>

@@ -683,7 +683,7 @@ export default function AdminPage() {
                 </label>
                 <div className="flex items-start gap-4">
                   <div
-                    className="relative w-32 h-24 rounded-lg overflow-hidden bg-muted border-2 border-dashed border-muted-foreground/25 flex items-center justify-center cursor-pointer hover:border-muted-foreground/50 transition-colors"
+                    className="relative w-32 h-24 rounded-sm overflow-hidden bg-muted border-2 border-dashed border-muted-foreground/25 flex items-center justify-center cursor-pointer hover:border-muted-foreground/50 transition-colors"
                     onClick={() => thumbnailInputRef.current?.click()}
                   >
                     {thumbnailPreview ? (
@@ -784,7 +784,7 @@ function SortableCategoryItem({
       ref={setNodeRef}
       style={style}
       className={`
-        flex items-center gap-3 p-3 rounded-lg border transition-colors
+        flex items-center gap-3 p-3 rounded-sm border transition-colors
         ${isSelected ? "border-primary bg-primary/5" : "border-border hover:border-muted-foreground/50"}
       `}
     >
@@ -874,7 +874,7 @@ function SortableMediaItem({ item, index, onDelete }: SortableMediaItemProps) {
     <div
       ref={setNodeRef}
       style={style}
-      className="group relative aspect-square rounded-lg overflow-hidden bg-muted"
+      className="group relative aspect-square rounded-sm overflow-hidden bg-muted"
     >
       {/* Position badge */}
       <div className="absolute top-2 left-2 z-10 px-2 py-1 rounded bg-black/60 text-white text-xs font-medium">
