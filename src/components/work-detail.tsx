@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { WorkItem } from "@/data/work-items";
 import type { Locale } from "@/lib/i18n";
@@ -27,18 +27,8 @@ export function WorkDetail({ item, locale, isModal = false, onClose }: WorkDetai
 
   return (
     <div className="relative">
-      {/* Close/Back button */}
-      {isModal ? (
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleBack}
-          className="absolute -top-2 -right-2 z-10"
-        >
-          <X className="h-5 w-5" />
-          <span className="sr-only">Close</span>
-        </Button>
-      ) : (
+      {/* Back button for page view */}
+      {!isModal && (
         <Button
           variant="ghost"
           size="sm"
@@ -75,7 +65,9 @@ export function WorkDetail({ item, locale, isModal = false, onClose }: WorkDetai
 
       {/* Title and description */}
       <div className="mb-8">
-        <h1 className="text-2xl font-semibold mb-2">{item.title[locale]}</h1>
+        <h1 className="mb-2 mx-0 max-w-none text-left text-2xl font-semibold leading-tight tracking-tight">
+          {item.title[locale]}
+        </h1>
         {item.subtitle && (
           <p className="text-lg text-muted-foreground mb-4">
             {item.subtitle[locale]}

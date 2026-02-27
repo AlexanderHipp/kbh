@@ -26,14 +26,14 @@ export function ImageComparisonSection() {
             <ImageComparisonImage
               src="/images/right.jpeg"
               alt="3D rendered medical instrument"
-              position="left"
+              position="right"
               className="rotate-90 scale-[1.35]"
             />
             {/* CAD wireframe - revealed on right side */}
             <ImageComparisonImage
               src="/images/left.jpeg"
               alt="CAD wireframe design"
-              position="right"
+              position="left"
               className="rotate-90 scale-[1.35]"
             />
             <ImageComparisonSlider className="bg-white/90 backdrop-blur-sm shadow-lg">
