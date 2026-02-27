@@ -23,11 +23,29 @@ export function WorkDetailWithMedia({
 
   // Create a merged item with dynamic media
   const itemWithMedia = useMemo(
-    () => ({
-      ...item,
-      media,
-    }),
-    [item, media]
+    () => {
+      const hasThumbnail = Boolean(item.thumbnail);
+      const dedupedMedia = hasThumbnail
+        ? media.filter((entry) => entry.src !== item.thumbnail)
+        : media;
+
+      const mergedMedia = hasThumbnail
+        ? [
+            {
+              type: "image" as const,
+              src: item.thumbnail,
+              alt: item.title[locale],
+            },
+            ...dedupedMedia,
+          ]
+        : dedupedMedia;
+
+      return {
+        ...item,
+        media: mergedMedia,
+      };
+    },
+    [item, locale, media]
   );
 
   if (isLoading) {

@@ -185,3 +185,12 @@
 .group:hover .animate-infinite-scroll-reverse {
   animation-play-state: paused;
 }
+
+/* Partner logos: monochrome in light, inverted in dark */
+.partner-logo {
+  filter: grayscale(1) saturate(0) brightness(0) contrast(1.35);
+}
+
+.dark .partner-logo {
+  filter: grayscale(1) saturate(0) brightness(0) invert(1) contrast(1.35);
+}

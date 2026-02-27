@@ -27,7 +27,10 @@ export function Services() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {t.services.items.map((item, index) => (
-            <Card key={index} className="rounded-sm border-border shadow-none overflow-hidden flex flex-row py-0">
+            <Card
+              key={index}
+              className="rounded-sm border-border shadow-none overflow-hidden flex flex-row py-0"
+            >
               <div className="w-1/3 shrink-0 self-stretch overflow-hidden">
                 <img
                   src={serviceImages[index]}
@@ -35,7 +38,7 @@ export function Services() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <CardHeader className="flex-1 justify-center py-6">
+              <CardHeader className="flex-1 justify-start py-6 px-2">
                 <CardTitle>{item.title}</CardTitle>
                 <CardDescription className="leading-relaxed">
                   {item.description}
