@@ -4,6 +4,7 @@ import { WorkGallery } from "@/components/sections/work-gallery";
 import { Services } from "@/components/sections/services";
 import { Process } from "@/components/sections/process";
 import { Clients } from "@/components/sections/clients";
+import { Tools } from "@/components/sections/tools";
 import { Contact } from "@/components/sections/contact";
 import { Footer } from "@/components/layout/footer";
 
@@ -18,6 +19,7 @@ export default function Home() {
           <WorkGallery />
           <Services />
           <Process />
+          <Tools />
           <Contact />
         </div>
       </main>

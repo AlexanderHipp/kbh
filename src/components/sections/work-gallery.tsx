@@ -45,7 +45,7 @@ export function WorkGallery() {
   const { t } = useLocale();
 
   return (
-    <section id="work" className="py-24">
+    <section id="work" className="scroll-mt-24 py-24">
       <div className="container mx-auto px-4 max-w-6xl">
         <h2 className="text-3xl font-semibold tracking-tight mb-4">
           {t.work.title}
@@ -75,7 +75,7 @@ function WorkTile({ category, locale, onClick }: WorkTileProps) {
   return (
     <button
       onClick={onClick}
-      className="group text-left w-full"
+      className="group w-full cursor-pointer text-left"
     >
       <div className="relative aspect-[4/3] rounded-sm overflow-hidden bg-muted mb-4">
         {category.thumbnail_url && (

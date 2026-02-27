@@ -11,16 +11,16 @@ export const dictionary = {
       privacy: "Privacy",
     },
     hero: {
-      headline: "From idea to series",
+      headline: "From concept to series production",
       subheadline:
         "Located in Tuttlingen – the heart of the world centre of medical technology. We accompany your product from concept to series production.",
       cta_primary: "View portfolio",
       cta_secondary: "Contact us",
     },
     imageComparison: {
-      title: "From concept to series production",
+      title: "Concepts engineered for reality",
       subtitle:
-        "We accompany your product through every development phase – from the initial idea to series-ready production.",
+        "We turn early ideas into compliant, manufacturable medical devices prepared for certification and series production.",
       labelLeft: "Concept",
       labelRight: "Production",
     },
@@ -53,6 +53,28 @@ export const dictionary = {
           title: "Series Production",
           description:
             "We don't stop at planning – we accompany you from concept through implementation and support your production.",
+        },
+      ],
+    },
+    tools: {
+      title: "Our Development Tools",
+      subtitle:
+        "Three software tools at the core of our development workflow, from engineering to visualization and technical documentation.",
+      items: [
+        {
+          name: "Solidworks",
+          description:
+            "Our primary CAD environment for new product development, 3D engineering, strength checks, and detailed design evaluation.",
+        },
+        {
+          name: "KeyShot",
+          description:
+            "Used to create high-quality renderings from 3D models for faster design decisions, concept variants, and stakeholder communication.",
+        },
+        {
+          name: "AutoCAD",
+          description:
+            "Used for precise 2D inspection drawings and for maintaining legacy technical documentation in established 2D workflows.",
         },
       ],
     },
@@ -140,16 +162,16 @@ export const dictionary = {
       privacy: "Datenschutz",
     },
     hero: {
-      headline: "Von der Idee zur Serie",
+      headline: "Vom Konzept zur Serienproduktion",
       subheadline:
         "Im Herzen des Weltzentrums der Medizintechnik – Tuttlingen. Wir begleiten Ihr Produkt vom Konzept bis zur Serienproduktion.",
       cta_primary: "Portfolio ansehen",
       cta_secondary: "Kontakt",
     },
     imageComparison: {
-      title: "Vom Entwurf zur Serienreife",
+      title: "Konzepte, entwickelt für die Realität",
       subtitle:
-        "Wir führen Ihr Produkt strukturiert durch jede Phase – vom ersten Konzept über die Entwicklung bis zur serienreifen Fertigung.",
+        "Wir überführen frühe Ideen in konforme, fertigungsgerechte Medizinprodukte – vorbereitet für Zulassung und Serienproduktion.",
       labelLeft: "Konzept",
       labelRight: "Produktion",
     },
@@ -182,6 +204,28 @@ export const dictionary = {
           title: "Serienproduktion",
           description:
             "Wir hören nicht bei der Planung auf – wir begleiten Sie vom Konzept über die Umsetzung bis zur Unterstützung Ihrer Produktion.",
+        },
+      ],
+    },
+    tools: {
+      title: "Unsere Entwicklungssoftware",
+      subtitle:
+        "Drei Software-Werkzeuge, die unseren Entwicklungsalltag prägen – von Konstruktion über Visualisierung bis zur technischen Dokumentation.",
+      items: [
+        {
+          name: "Solidworks",
+          description:
+            "Unsere zentrale CAD-Umgebung für Neuentwicklungen, 3D-Konstruktion, Festigkeitsbetrachtungen und die präzise Ausarbeitung von Produktdetails.",
+        },
+        {
+          name: "KeyShot",
+          description:
+            "Mit KeyShot erzeugen wir hochwertige Renderings aus 3D-Modellen für schnelle Designentscheidungen, Konzeptvarianten und klare Kommunikation.",
+        },
+        {
+          name: "AutoCAD",
+          description:
+            "AutoCAD nutzen wir für präzise 2D-Prüfzeichnungen und die Pflege bestehender technischer Zeichnungen im etablierten 2D-Prozess.",
         },
       ],
     },
@@ -293,6 +337,14 @@ export interface Dictionary {
     title: string;
     items: Array<{
       title: string;
+      description: string;
+    }>;
+  };
+  tools: {
+    title: string;
+    subtitle: string;
+    items: Array<{
+      name: string;
       description: string;
     }>;
   };

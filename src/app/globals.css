@@ -127,6 +127,14 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-mono;
   }
+  h1 {
+    max-width: 16ch;
+    margin-inline: auto;
+    font-size: clamp(2.4rem, 7.5vw, 5.25rem);
+    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
 }
 
 /* Grid background */

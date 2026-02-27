@@ -12,7 +12,7 @@ export function Process() {
   const { t } = useLocale();
 
   return (
-    <section id="about" className="py-24">
+    <section id="about" className="scroll-mt-24 py-24">
       <div className="container mx-auto px-4 max-w-6xl">
         <h2 className="text-3xl font-semibold tracking-tight mb-12">
           {t.process.title}

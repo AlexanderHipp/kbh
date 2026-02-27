@@ -1,50 +1,53 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { Suspense } from "react";
+import Image from "next/image";
 import { useLocale } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
-
-const HeroScene = dynamic(
-  () => import("@/components/three/hero-scene").then((mod) => mod.HeroScene),
-  { ssr: false },
-);
+import { Card } from "@/components/ui/card";
 
 export function Hero() {
   const { t } = useLocale();
-  const words = t.hero.headline.trim().split(/\s+/);
-  const splitIndex = Math.ceil(words.length / 2);
-  const headlineLineOne = words.slice(0, splitIndex).join(" ");
-  const headlineLineTwo = words.slice(splitIndex).join(" ");
 
   return (
-    <section className="relative h-[800px] sm:h-[900px] lg:h-[1000px] flex items-center justify-center overflow-hidden border border-muted/80 border-b-2">
-      <Suspense fallback={null}>
-        <HeroScene />
-      </Suspense>
+    <section className="relative overflow-hidden border border-border border-b bg-background text-foreground pt-24">
+      <div className="pointer-events-none absolute inset-0 " />
 
-      <div className="container mx-auto px-4 max-w-5xl text-center relative z-10">
-        <h1 className="mx-auto max-w-[14ch] text-[clamp(3.25rem,11vw,8.5rem)] leading-[0.9] tracking-[-0.03em] font-semibold mb-8">
-          <span className="block">{headlineLineOne}</span>
-          <span className="block">{headlineLineTwo}</span>
-        </h1>
-        <p className="text-base sm:text-lg md:text-xl text-foreground mb-10 max-w-3xl mx-auto bg-background/75 backdrop-blur-sm border border-border/60 rounded-md px-4 py-3">
-          {t.hero.subheadline}
-        </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button size="lg" asChild>
-            <a href="#work">{t.hero.cta_primary}</a>
-          </Button>
-          <Button size="lg" variant="outline" asChild>
-            <a href="#contact">{t.hero.cta_secondary}</a>
-          </Button>
-        </div>
-      </div>
+      <div className="relative z-10 mx-auto flex min-h-[860px] flex-col border-x border-border/70">
+        <div className="flex flex-1 flex-col">
+          <div className="flex min-h-[410px] flex-col items-center justify-center px-6 text-center ">
+            <h1 className="text-6xl max-w-3xl mx-auto font-semibold">
+              {t.hero.headline}
+            </h1>
+            <p className="mt-6 max-w-2xl text-sm text-muted-foreground sm:text-base">
+              {t.hero.subheadline}
+            </p>
+            <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row">
+              <Button
+                size="lg"
+                asChild
+                className="h-10 bg-[#0202EF] px-6 text-white hover:bg-[#1A1AF2]"
+              >
+                <a href="#work">{t.hero.cta_primary}</a>
+              </Button>
+              <Button size="lg" variant="outline" asChild className="h-10 px-6">
+                <a href="#contact">{t.hero.cta_secondary}</a>
+              </Button>
+            </div>
+          </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex items-start justify-center p-2">
-          <div className="w-1 h-2 bg-muted-foreground/50 rounded-full" />
+          <div className="flex flex-1 items-stretch px-4 py-6 sm:px-8 sm:py-8 max-w-6xl mx-auto w-full">
+            <Card className="w-full overflow-hidden  border-border/70 bg-card p-0 shadow-none">
+              <div className="relative aspect-video min-h-[340px] w-full overflow-hidden ">
+                <Image
+                  src="/bg.png"
+                  alt="Medical technology product development"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            </Card>
+          </div>
         </div>
       </div>
     </section>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 96" role="img" aria-labelledby="title desc">
+  <title id="title">AutoCAD wordmark placeholder</title>
+  <desc id="desc">Monochrome placeholder logo for AutoCAD.</desc>
+  <rect x="1" y="1" width="318" height="94" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>
+  <text x="160" y="58" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="currentColor" letter-spacing="2">AUTOCAD</text>
+</svg>

@@ -19,7 +19,7 @@ export function Services() {
   const { t } = useLocale();
 
   return (
-    <section id="services" className="py-24">
+    <section id="services" className="scroll-mt-24 py-24">
       <div className="container mx-auto px-4 max-w-6xl">
         <h2 className="text-3xl font-semibold tracking-tight mb-12">
           {t.services.title}
