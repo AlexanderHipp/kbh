@@ -16,7 +16,7 @@ export function InfiniteSlider({
   className,
 }: InfiniteSliderProps) {
   return (
-    <div className={cn("overflow-hidden", className)}>
+    <div className={cn("group overflow-hidden", className)}>
       <div
         className={cn(
           "flex w-max",

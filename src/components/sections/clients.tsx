@@ -3,13 +3,27 @@
 import { useLocale } from "@/lib/i18n";
 import { InfiniteSlider } from "@/components/core/infinite-slider";
 
-const placeholderLogos = [
-  { src: "https://placehold.co/160x60/e2e8f0/64748b?text=Partner+1", alt: "Partner 1" },
-  { src: "https://placehold.co/160x60/e2e8f0/64748b?text=Partner+2", alt: "Partner 2" },
-  { src: "https://placehold.co/160x60/e2e8f0/64748b?text=Partner+3", alt: "Partner 3" },
-  { src: "https://placehold.co/160x60/e2e8f0/64748b?text=Partner+4", alt: "Partner 4" },
-  { src: "https://placehold.co/160x60/e2e8f0/64748b?text=Partner+5", alt: "Partner 5" },
-  { src: "https://placehold.co/160x60/e2e8f0/64748b?text=Partner+6", alt: "Partner 6" },
+const partnerLogos = [
+  { src: "/partners/ustomed.svg", alt: "Ustomed" },
+  { src: "/partners/as.svg", alt: "AS" },
+  { src: "/partners/bees.svg", alt: "Bees" },
+  { src: "/partners/brokker.svg", alt: "Brokker" },
+  { src: "/partners/dewimed.svg", alt: "Dewimed" },
+  { src: "/partners/fetzer.svg", alt: "Fetzer" },
+  { src: "/partners/kapp.svg", alt: "Kapp" },
+  { src: "/partners/leibinger.svg", alt: "Leibinger" },
+  { src: "/partners/lizard.svg", alt: "Lizard" },
+  { src: "/partners/medtorque.svg", alt: "Medtorque" },
+  { src: "/partners/nexor.svg", alt: "Nexor" },
+  { src: "/partners/oertel.svg", alt: "Oertel" },
+  { src: "/partners/ortho.svg", alt: "Ortho" },
+  { src: "/partners/pacific.svg", alt: "Pacific" },
+  { src: "/partners/rudolfstorz.svg", alt: "Rudolf Storz" },
+  { src: "/partners/rz.svg", alt: "RZ" },
+  { src: "/partners/surgical.svg", alt: "Surgical" },
+  { src: "/partners/swiss.svg", alt: "Swiss" },
+  { src: "/partners/taurus.svg", alt: "Taurus" },
+  { src: "/partners/medcare.svg", alt: "Medcare" },
 ];
 
 export function Clients() {
@@ -27,12 +41,12 @@ export function Clients() {
       </div>
 
       <InfiniteSlider gap={48}>
-        {placeholderLogos.map((logo, index) => (
+        {partnerLogos.map((logo, index) => (
           <img
             key={index}
             src={logo.src}
             alt={logo.alt}
-            className="h-16 w-40 object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+            className="h-20 w-auto object-contain rounded-sm"
           />
         ))}
       </InfiniteSlider>
