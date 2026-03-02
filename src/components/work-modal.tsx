@@ -32,29 +32,32 @@ export function WorkModal({ item, locale, onClose }: WorkModalProps) {
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
       <DialogContent
-        className="max-h-[95vh] w-[min(96vw,1500px)] max-w-[96vw] overflow-y-auto p-5 sm:p-8"
+        className="w-[98vw] max-w-[98vw] overflow-visible p-0 sm:!max-w-7xl"
         showCloseButton={false}
       >
         <DialogClose asChild>
           <Button
             type="button"
             variant="outline"
-            size="icon"
-            className="absolute -top-12 right-0 z-20"
+            size="sm"
+            className="absolute -top-10 2xl:top-0 right-0 2xl:-right-24 z-30 gap-2"
             aria-label="Close popup"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
+            Close
           </Button>
         </DialogClose>
         <VisuallyHidden.Root>
           <DialogTitle>{item.title[locale]}</DialogTitle>
         </VisuallyHidden.Root>
-        <WorkDetailWithMedia
-          item={item}
-          locale={locale}
-          isModal={true}
-          onClose={onClose}
-        />
+        <div className="max-h-[95vh] overflow-y-auto p-3 sm:p-5">
+          <WorkDetailWithMedia
+            item={item}
+            locale={locale}
+            isModal={true}
+            onClose={onClose}
+          />
+        </div>
       </DialogContent>
     </Dialog>
   );

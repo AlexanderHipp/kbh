@@ -24,20 +24,29 @@ function WorkGalleryContent() {
   }
 
   const activeItem = activeCategory ? categoryToWorkItem(activeCategory) : null;
+  const lgRemainder = categories.length % 3;
+  const lgFillersNeeded = lgRemainder === 0 ? 0 : 3 - lgRemainder;
 
   return (
     <>
-      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 lg:border-r lg:border-muted">
-        {categories.map((category, index) => (
-          <WorkTile
-            key={category.slug}
-            category={category}
-            locale={locale}
-            index={index}
-            total={categories.length}
-            onClick={() => openWork(category.slug)}
-          />
-        ))}
+      <div className="overflow-hidden rounded-sm border border-border">
+        <div className="grid grid-cols-1 gap-px bg-border md:grid-cols-2 lg:grid-cols-3">
+          {categories.map((category) => (
+            <WorkTile
+              key={category.slug}
+              category={category}
+              locale={locale}
+              onClick={() => openWork(category.slug)}
+            />
+          ))}
+          {Array.from({ length: lgFillersNeeded }).map((_, i) => (
+            <div
+              key={`lg-filler-${i}`}
+              aria-hidden
+              className={`hidden bg-card lg:block ${i === lgFillersNeeded - 1 ? "rounded-br-sm" : ""}`}
+            />
+          ))}
+        </div>
       </div>
 
       {activeItem && (
@@ -71,65 +80,18 @@ export function WorkGallery() {
 interface WorkTileProps {
   category: CategoryWithThumbnailUrl;
   locale: Locale;
-  index: number;
-  total: number;
   onClick: () => void;
 }
 
-function WorkTile({ category, locale, index, total, onClick }: WorkTileProps) {
+function WorkTile({ category, locale, onClick }: WorkTileProps) {
   const title = locale === "de" ? category.title_de : category.title_en;
   const subtitle =
     locale === "de" ? category.subtitle_de : category.subtitle_en;
 
-  const getLayout = (cols: number) => {
-    const col = index % cols;
-    const row = Math.floor(index / cols);
-    const isFirstRow = row === 0;
-    const isFirstCol = col === 0;
-    const hasRightNeighbor = col < cols - 1 && index + 1 < total;
-    const hasBottomNeighbor = index + cols < total;
-
-    return {
-      hasRightNeighbor,
-      hasBottomNeighbor,
-      isTopRightCorner: isFirstRow && !hasRightNeighbor,
-      isBottomLeftCorner: isFirstCol && !hasBottomNeighbor,
-      isBottomRightCorner: !hasRightNeighbor && !hasBottomNeighbor,
-    };
-  };
-
-  const sm = getLayout(1);
-  const md = getLayout(2);
-  const lg = getLayout(3);
-  const lgRemainder = total % 3;
-  const lgLastRow = Math.floor((total - 1) / 3);
-  const lgRow = Math.floor(index / 3);
-  const lgCol = index % 3;
-  const lgMissingColumnDivider =
-    lgRemainder !== 0 && lgRow === lgLastRow && lgCol === lgRemainder - 1;
-
   return (
     <button onClick={onClick} className="group w-full cursor-pointer text-left">
-      <article
-        className={`h-full overflow-hidden rounded-none border border-muted bg-card p-3 transition-colors group-hover:border-muted-foreground/40
-          border-r border-l border-t
-          ${sm.hasBottomNeighbor ? "border-b-0" : "border-b"}
-          ${index === 0 ? "rounded-tl-sm rounded-tr-sm" : ""}
-          ${index === total - 1 ? "rounded-bl-sm rounded-br-sm" : ""}
-          md:rounded-tr-none md:rounded-bl-none md:rounded-br-none md:border-r-0 md:border-b-0
-          ${md.hasRightNeighbor ? "" : "md:border-r"}
-          ${md.hasBottomNeighbor ? "" : "md:border-b"}
-          ${md.isTopRightCorner ? "md:rounded-tr-sm" : ""}
-          ${md.isBottomLeftCorner ? "md:rounded-bl-sm" : ""}
-          ${md.isBottomRightCorner ? "md:rounded-br-sm" : ""}
-          lg:rounded-tr-none lg:rounded-bl-none lg:rounded-br-none lg:border-r-0 lg:border-b-0
-          ${lgMissingColumnDivider ? "lg:border-r" : ""}
-          ${lg.hasBottomNeighbor ? "" : "lg:border-b"}
-          ${lg.isTopRightCorner ? "lg:rounded-tr-sm" : ""}
-          ${lg.isBottomLeftCorner ? "lg:rounded-bl-sm" : ""}
-          ${lg.isBottomRightCorner ? "lg:rounded-br-sm" : ""}`}
-      >
-        <div className="relative mb-4 aspect-[4/3] overflow-hidden rounded-sm border border-muted/70 bg-muted">
+      <article className="h-full overflow-hidden bg-card p-3 transition-colors group-hover:bg-accent/40">
+        <div className="relative mb-4 aspect-[4/3] overflow-hidden rounded-sm border border-muted/70 bg-zinc-100">
           {category.thumbnail_url && (
             <Image
               src={category.thumbnail_url}
@@ -163,7 +125,7 @@ function WorkGallerySkeleton() {
             key={i}
             className="animate-pulse overflow-hidden rounded-sm bg-card p-3"
           >
-            <div className="mb-4 aspect-[4/3] rounded-sm  bg-muted" />
+            <div className="mb-4 aspect-[4/3] rounded-sm bg-zinc-100" />
             <div className="mb-2 h-5 w-32 rounded bg-muted" />
             <div className="h-4 w-24 rounded bg-muted" />
           </div>

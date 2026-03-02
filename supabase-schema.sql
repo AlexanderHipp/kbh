@@ -2,10 +2,10 @@
 -- Execute this entire file to create all required tables
 
 -- ============================================
--- PROJECTS TABLE
+-- CATEGORIES TABLE
 -- ============================================
 
-CREATE TABLE IF NOT EXISTS projects (
+CREATE TABLE IF NOT EXISTS categories (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   slug TEXT UNIQUE NOT NULL,
   title_en TEXT NOT NULL,
@@ -14,41 +14,38 @@ CREATE TABLE IF NOT EXISTS projects (
   subtitle_de TEXT,
   description_en TEXT,
   description_de TEXT,
-  role TEXT,
-  client TEXT,
-  year INTEGER,
-  category TEXT,
-  thumbnail TEXT,
+  thumbnail_path TEXT,
   position INTEGER NOT NULL DEFAULT 0,
   is_published BOOLEAN DEFAULT true,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS idx_projects_slug ON projects(slug);
-CREATE INDEX IF NOT EXISTS idx_projects_position ON projects(position);
-CREATE INDEX IF NOT EXISTS idx_projects_published ON projects(is_published);
+CREATE INDEX IF NOT EXISTS idx_categories_slug ON categories(slug);
+CREATE INDEX IF NOT EXISTS idx_categories_position ON categories(position);
+CREATE INDEX IF NOT EXISTS idx_categories_published ON categories(is_published);
 
-ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
+ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 
-DO $$
-BEGIN
-  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'projects' AND policyname = 'Allow public read projects') THEN
-    CREATE POLICY "Allow public read projects" ON projects FOR SELECT USING (is_published = true);
-  END IF;
-  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'projects' AND policyname = 'Allow all operations projects') THEN
-    CREATE POLICY "Allow all operations projects" ON projects FOR ALL USING (true);
-  END IF;
-END $$;
+-- Drop existing policies if they exist (for clean re-runs)
+DROP POLICY IF EXISTS "Allow public read categories" ON categories;
+DROP POLICY IF EXISTS "Allow all operations categories" ON categories;
+
+-- Policy to allow public read access for published categories
+CREATE POLICY "Allow public read categories" ON categories
+  FOR SELECT USING (is_published = true);
+
+-- Policy to allow all operations (for admin - consider restricting in production)
+CREATE POLICY "Allow all operations categories" ON categories
+  FOR ALL USING (true);
 
 -- ============================================
--- PROJECT MEDIA TABLE
+-- CATEGORY MEDIA TABLE
 -- ============================================
 
--- Create the project_media table
-CREATE TABLE IF NOT EXISTS project_media (
+CREATE TABLE IF NOT EXISTS category_media (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  project_slug TEXT NOT NULL,
+  category_slug TEXT NOT NULL REFERENCES categories(slug) ON DELETE CASCADE,
   position INTEGER NOT NULL DEFAULT 0,
   type TEXT NOT NULL CHECK (type IN ('image', 'gif', 'video')),
   file_path TEXT NOT NULL,
@@ -56,24 +53,54 @@ CREATE TABLE IF NOT EXISTS project_media (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Create index for faster project lookups
-CREATE INDEX IF NOT EXISTS idx_project_media_slug ON project_media(project_slug);
+CREATE INDEX IF NOT EXISTS idx_category_media_slug ON category_media(category_slug);
+CREATE INDEX IF NOT EXISTS idx_category_media_position ON category_media(category_slug, position);
 
--- Create index for ordering
-CREATE INDEX IF NOT EXISTS idx_project_media_position ON project_media(project_slug, position);
+ALTER TABLE category_media ENABLE ROW LEVEL SECURITY;
 
--- Enable Row Level Security (optional but recommended)
-ALTER TABLE project_media ENABLE ROW LEVEL SECURITY;
+-- Drop existing policies if they exist (for clean re-runs)
+DROP POLICY IF EXISTS "Allow public read category_media" ON category_media;
+DROP POLICY IF EXISTS "Allow all operations category_media" ON category_media;
 
 -- Policy to allow public read access
-CREATE POLICY "Allow public read access" ON project_media
+CREATE POLICY "Allow public read category_media" ON category_media
   FOR SELECT USING (true);
 
--- Policy to allow authenticated insert/update/delete (for admin)
--- Note: Adjust this based on your auth setup
-CREATE POLICY "Allow all operations for authenticated users" ON project_media
+-- Policy to allow all operations (for admin - consider restricting in production)
+CREATE POLICY "Allow all operations category_media" ON category_media
   FOR ALL USING (true);
 
--- If you want to restrict to specific users, use something like:
--- CREATE POLICY "Allow admin operations" ON project_media
---   FOR ALL USING (auth.uid() IN (SELECT id FROM admin_users));
+-- ============================================
+-- STORAGE BUCKET SETUP
+-- ============================================
+-- Note: Run these in separate SQL statements or via Supabase Dashboard
+--
+-- 1. Create a storage bucket named "media" via Dashboard > Storage > New Bucket
+--    - Set it to PUBLIC for serving images
+--
+-- Or via SQL (may require service role):
+-- INSERT INTO storage.buckets (id, name, public) VALUES ('media', 'media', true);
+--
+-- Storage policies (run via Dashboard > Storage > Policies):
+-- - Allow public read: SELECT for all users
+-- - Allow authenticated upload: INSERT for authenticated users
+-- - Allow authenticated delete: DELETE for authenticated users
+
+-- ============================================
+-- HELPER: Update timestamp trigger
+-- ============================================
+
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS update_categories_updated_at ON categories;
+
+CREATE TRIGGER update_categories_updated_at
+  BEFORE UPDATE ON categories
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();

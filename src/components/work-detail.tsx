@@ -14,7 +14,12 @@ interface WorkDetailProps {
   onClose?: () => void;
 }
 
-export function WorkDetail({ item, locale, isModal = false, onClose }: WorkDetailProps) {
+export function WorkDetail({
+  item,
+  locale,
+  isModal = false,
+  onClose,
+}: WorkDetailProps) {
   const router = useRouter();
 
   const handleBack = () => {
@@ -40,30 +45,7 @@ export function WorkDetail({ item, locale, isModal = false, onClose }: WorkDetai
         </Button>
       )}
 
-      {/* Hero media */}
-      {item.media[0] && (
-        <div className="relative aspect-[3/2] rounded-sm overflow-hidden bg-muted mb-8">
-          {item.media[0].type === "video" ? (
-            <video
-              src={item.media[0].src}
-              poster={item.media[0].poster}
-              controls
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <Image
-              src={item.media[0].src}
-              alt={item.media[0].alt || item.title[locale]}
-              fill
-              className="object-cover"
-              sizes="(max-width: 896px) 100vw, 896px"
-              priority
-            />
-          )}
-        </div>
-      )}
-
-      {/* Title and description */}
+      {/* Title and description - full width */}
       <div className="mb-8">
         <h1 className="mb-2 mx-0 max-w-none text-left text-2xl font-semibold leading-tight tracking-tight">
           {item.title[locale]}
@@ -73,18 +55,31 @@ export function WorkDetail({ item, locale, isModal = false, onClose }: WorkDetai
             {item.subtitle[locale]}
           </p>
         )}
-        <p className="text-muted-foreground leading-relaxed">
+        <p className="text-muted-foreground leading-relaxed max-w-3xl">
           {item.description[locale]}
         </p>
+        {isModal && (
+          <Button
+            asChild
+            className="mt-6"
+            onClick={() => {
+              if (onClose) onClose();
+            }}
+          >
+            <a href="#contact">
+              {locale === "de" ? "Kontakt aufnehmen" : "Get in touch"}
+            </a>
+          </Button>
+        )}
       </div>
 
-      {/* Additional media gallery */}
-      {item.media.length > 1 && (
-        <div className="space-y-4">
-          {item.media.slice(1).map((media, index) => (
+      {/* Media gallery - two columns */}
+      {item.media.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {item.media.map((media, index) => (
             <div
               key={index}
-              className="relative aspect-[3/2] rounded-sm overflow-hidden bg-muted"
+              className="relative aspect-[3/2] overflow-hidden rounded-sm bg-zinc-100"
             >
               {media.type === "video" ? (
                 <video
@@ -99,7 +94,8 @@ export function WorkDetail({ item, locale, isModal = false, onClose }: WorkDetai
                   alt={media.alt || item.title[locale]}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 896px) 100vw, 896px"
+                  sizes="(max-width: 1280px) 50vw, 640px"
+                  priority={index === 0}
                 />
               )}
             </div>
