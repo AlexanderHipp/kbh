@@ -15,7 +15,6 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const ctaBlue = "#0202EF";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,7 +49,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="scroll-mt-24 py-32">
+    <section id="contact" className="py-32">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Left: Info */}
@@ -95,7 +94,6 @@ export function Contact() {
                   placeholder={t.contact.namePlaceholder}
                   required
                   disabled={isSubmitting}
-                  className="focus-visible:border-[#0202EF] focus-visible:ring-[#0202EF]/30"
                 />
               </div>
 
@@ -108,7 +106,6 @@ export function Contact() {
                   placeholder={t.contact.emailPlaceholder}
                   required
                   disabled={isSubmitting}
-                  className="focus-visible:border-[#0202EF] focus-visible:ring-[#0202EF]/30"
                 />
               </div>
 
@@ -121,7 +118,6 @@ export function Contact() {
                   rows={5}
                   required
                   disabled={isSubmitting}
-                  className="focus-visible:border-[#0202EF] focus-visible:ring-[#0202EF]/30"
                 />
               </div>
 
@@ -135,8 +131,7 @@ export function Contact() {
                   name="privacyConsent"
                   required
                   disabled={isSubmitting}
-                  className="mt-0.5 h-4 w-4 shrink-0 rounded border border-input"
-                  style={{ accentColor: ctaBlue }}
+                  className="mt-0.5 h-4 w-4 shrink-0 rounded border border-input accent-foreground"
                 />
                 <span>
                   {t.contact.privacyConsentPrefix}
@@ -155,7 +150,7 @@ export function Contact() {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full bg-[#0202EF] text-white hover:bg-[#1A1AF2]"
+                className="w-full"
                 disabled={isSubmitting || isSubmitted}
               >
                 {isSubmitted

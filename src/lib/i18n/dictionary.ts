@@ -11,11 +11,11 @@ export const dictionary = {
       privacy: "Privacy",
     },
     hero: {
-      headline: "From concept to series production",
+      headline: "From Concept to Series Production",
       subheadline:
-        "Located in Tuttlingen – the heart of the world centre of medical technology. We accompany your product from concept to series production.",
-      cta_primary: "View portfolio",
-      cta_secondary: "Contact us",
+        "Located in Tuttlingen – the heart of the world centre of medical technology. We accompany your product from Concept to Series Production.",
+      cta_primary: "View Portfolio",
+      cta_secondary: "Contact Us",
     },
     imageComparison: {
       title: "Concepts engineered for reality",

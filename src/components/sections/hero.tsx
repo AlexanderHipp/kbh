@@ -14,8 +14,8 @@ export function Hero() {
 
       <div className="relative z-10 mx-auto flex min-h-[860px] flex-col border-x border-border/70">
         <div className="flex flex-1 flex-col">
-          <div className="flex min-h-[410px] flex-col items-center justify-center px-6 text-center ">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05]">
+          <div className="flex min-h-[410px] flex-col items-center justify-center px-4 text-center ">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05] max-w-2xl mx-auto">
               {t.hero.headline}
             </h1>
             <p className="mt-6 max-w-2xl text-sm text-muted-foreground sm:text-base">

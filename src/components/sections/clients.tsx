@@ -46,7 +46,7 @@ export function Clients() {
             key={index}
             src={logo.src}
             alt={logo.alt}
-            className="partner-logo h-20 w-auto rounded-sm object-contain"
+            className=" h-20 w-auto rounded-sm object-contain"
           />
         ))}
       </InfiniteSlider>

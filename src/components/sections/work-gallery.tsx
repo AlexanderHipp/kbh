@@ -4,7 +4,11 @@ import { Suspense } from "react";
 import Image from "next/image";
 import { useLocale } from "@/lib/i18n";
 import { useWorkModal } from "@/hooks/use-work-modal";
-import { useCategories, useCategory, categoryToWorkItem } from "@/hooks/use-categories";
+import {
+  useCategories,
+  useCategory,
+  categoryToWorkItem,
+} from "@/hooks/use-categories";
 import { WorkModal } from "@/components/work-modal";
 import type { CategoryWithThumbnailUrl } from "@/lib/supabase-categories";
 import type { Locale } from "@/lib/i18n";
@@ -23,17 +27,17 @@ function WorkGalleryContent() {
 
   return (
     <>
-      <div className="rounded-sm border border-border/80 p-3 md:p-4">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {categories.map((category) => (
+      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3">
+        {categories.map((category, index) => (
           <WorkTile
             key={category.slug}
             category={category}
             locale={locale}
+            index={index}
+            total={categories.length}
             onClick={() => openWork(category.slug)}
           />
         ))}
-        </div>
       </div>
 
       {activeItem && (
@@ -67,36 +71,64 @@ export function WorkGallery() {
 interface WorkTileProps {
   category: CategoryWithThumbnailUrl;
   locale: Locale;
+  index: number;
+  total: number;
   onClick: () => void;
 }
 
-function WorkTile({ category, locale, onClick }: WorkTileProps) {
+function WorkTile({ category, locale, index, total, onClick }: WorkTileProps) {
   const title = locale === "de" ? category.title_de : category.title_en;
-  const subtitle = locale === "de" ? category.subtitle_de : category.subtitle_en;
+  const subtitle =
+    locale === "de" ? category.subtitle_de : category.subtitle_en;
+
+  const mdCols = 2;
+  const lgCols = 3;
+
+  const mdTopRightIndex = Math.min(total, mdCols) - 1;
+  const lgTopRightIndex = Math.min(total, lgCols) - 1;
+
+  const mdLastRowStart = Math.max(0, total - (total % mdCols || mdCols));
+  const lgLastRowStart = Math.max(0, total - (total % lgCols || lgCols));
+
+  const mdBottomRight =
+    index === total - 1 || (total % mdCols === 0 && index === total - 2);
+  const lgBottomRight =
+    index === total - 1 || (total % lgCols === 0 && index === total - 2);
 
   return (
     <button onClick={onClick} className="group w-full cursor-pointer text-left">
-      <article className="h-full overflow-hidden rounded-sm border-2 border-border bg-card p-3 transition-colors group-hover:border-muted-foreground/40">
-      <div className="relative mb-4 aspect-[4/3] overflow-hidden rounded-sm border border-border/70 bg-muted">
-        {category.thumbnail_url && (
-          <Image
-            src={category.thumbnail_url}
-            alt={title}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
+      <article
+        className={`h-full overflow-hidden rounded-none border border-border bg-card p-3 transition-colors group-hover:border-muted-foreground/40
+          ${index === 0 ? "rounded-tl-sm" : ""}
+          ${index === total - 1 ? "rounded-br-sm" : ""}
+          ${index === total - 1 ? "rounded-bl-sm" : ""}
+          ${index === mdTopRightIndex ? "md:rounded-tr-sm" : ""}
+          ${index === lgTopRightIndex ? "lg:rounded-tr-sm" : ""}
+          ${index === mdLastRowStart ? "md:rounded-bl-sm" : ""}
+          ${index === lgLastRowStart ? "lg:rounded-bl-sm" : ""}
+          ${mdBottomRight ? "md:rounded-br-sm" : ""}
+          ${lgBottomRight ? "lg:rounded-br-sm" : ""}`}
+      >
+        <div className="relative mb-4 aspect-[4/3] overflow-hidden rounded-sm border border-border/70 bg-muted">
+          {category.thumbnail_url && (
+            <Image
+              src={category.thumbnail_url}
+              alt={title}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          )}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
+        </div>
+        <h3 className="mb-1 text-lg font-medium transition-colors group-hover:text-muted-foreground">
+          {title}
+        </h3>
+        {subtitle && (
+          <p className="line-clamp-2 text-sm text-muted-foreground">
+            {subtitle}
+          </p>
         )}
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-      </div>
-      <h3 className="mb-1 text-lg font-medium transition-colors group-hover:text-muted-foreground">
-        {title}
-      </h3>
-      {subtitle && (
-        <p className="line-clamp-2 text-sm text-muted-foreground">
-          {subtitle}
-        </p>
-      )}
       </article>
     </button>
   );
@@ -104,15 +136,18 @@ function WorkTile({ category, locale, onClick }: WorkTileProps) {
 
 function WorkGallerySkeleton() {
   return (
-    <div className="rounded-sm border border-border/80 p-3 md:p-4">
+    <div className="rounded-sm  p-3 md:p-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {[...Array(4)].map((_, i) => (
-        <div key={i} className="animate-pulse overflow-hidden rounded-sm border-2 border-border bg-card p-3">
-          <div className="mb-4 aspect-[4/3] rounded-sm border border-border/70 bg-muted" />
-          <div className="mb-2 h-5 w-32 rounded bg-muted" />
-          <div className="h-4 w-24 rounded bg-muted" />
-        </div>
-      ))}
+        {[...Array(4)].map((_, i) => (
+          <div
+            key={i}
+            className="animate-pulse overflow-hidden rounded-sm bg-card p-3"
+          >
+            <div className="mb-4 aspect-[4/3] rounded-sm  bg-muted" />
+            <div className="mb-2 h-5 w-32 rounded bg-muted" />
+            <div className="h-4 w-24 rounded bg-muted" />
+          </div>
+        ))}
       </div>
     </div>
   );
