@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { getLocale } from "@/lib/i18n/get-locale";
 import { Providers } from "@/components/providers";
 import { Navigation } from "@/components/layout/navigation";
@@ -34,6 +35,7 @@ export default async function RootLayout({
           <Navigation />
           {children}
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

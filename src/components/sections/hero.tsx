@@ -9,10 +9,10 @@ export function Hero() {
   const { t } = useLocale();
 
   return (
-    <section className="relative overflow-hidden border border-border border-b bg-background text-foreground pt-24">
+    <section className="relative overflow-hidden border border-muted border-b bg-background text-foreground pt-24">
       <div className="pointer-events-none absolute inset-0 " />
 
-      <div className="relative z-10 mx-auto flex min-h-[860px] flex-col border-x border-border/70">
+      <div className="relative z-10 mx-auto flex min-h-[860px] flex-col border-x border-muted/70">
         <div className="flex flex-1 flex-col">
           <div className="flex min-h-[410px] flex-col items-center justify-center px-4 text-center ">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05] max-w-2xl mx-auto">
@@ -36,7 +36,7 @@ export function Hero() {
           </div>
 
           <div className="flex flex-1 items-stretch px-4 py-6 sm:px-8 sm:py-8 max-w-6xl mx-auto w-full">
-            <Card className="w-full overflow-hidden p-0 shadow-none border-2 border-border">
+            <Card className="w-full overflow-hidden p-0 shadow-none border-2 border-muted">
               <div className="relative aspect-video min-h-[340px] w-full overflow-hidden ">
                 <Image
                   src="/bg.png"

@@ -13,7 +13,7 @@ export default function Home() {
     <>
       <main>
         <Hero />
-        <div className="container mx-auto px-4 max-w-6xl border border-muted/80 border-l-2 border-r-2 border-t-0 border-b-0 ">
+        <div className="container mx-auto px-4 max-w-6xl border border-muted border-l-2 border-r-2 border-t-0 border-b-0 ">
           <ImageComparisonSection />
           <Clients />
           <WorkGallery />

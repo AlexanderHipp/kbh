@@ -78,7 +78,7 @@ export function Navigation() {
   );
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-md">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-muted bg-background/80 backdrop-blur-md">
       <nav className="container mx-auto flex h-14 items-center justify-between px-4 max-w-6xl">
         <Link
           href="/"

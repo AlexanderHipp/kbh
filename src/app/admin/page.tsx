@@ -785,7 +785,7 @@ function SortableCategoryItem({
       style={style}
       className={`
         flex items-center gap-3 p-3 rounded-sm border transition-colors
-        ${isSelected ? "border-primary bg-primary/5" : "border-border hover:border-muted-foreground/50"}
+        ${isSelected ? "border-primary bg-primary/5" : "border-muted hover:border-muted-foreground/50"}
       `}
     >
       <div

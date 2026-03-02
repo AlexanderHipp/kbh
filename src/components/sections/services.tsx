@@ -29,7 +29,7 @@ export function Services() {
           {t.services.items.map((item, index) => (
             <Card
               key={index}
-              className="rounded-sm border-border shadow-none overflow-hidden flex flex-row py-0"
+              className="rounded-sm border-muted shadow-none overflow-hidden flex flex-row py-0"
             >
               <div className="w-1/3 shrink-0 self-stretch overflow-hidden">
                 <img

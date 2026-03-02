@@ -20,7 +20,7 @@ export function Process() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {t.process.steps.map((step, index) => (
-            <Card key={index} className="rounded-sm border-border shadow-none">
+            <Card key={index} className="rounded-sm border-muted shadow-none">
               <CardHeader>
                 <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center mb-2">
                   <span className="text-xl font-semibold text-foreground">

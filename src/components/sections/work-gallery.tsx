@@ -27,7 +27,7 @@ function WorkGalleryContent() {
 
   return (
     <>
-      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 lg:border-r lg:border-muted">
         {categories.map((category, index) => (
           <WorkTile
             key={category.slug}
@@ -81,35 +81,55 @@ function WorkTile({ category, locale, index, total, onClick }: WorkTileProps) {
   const subtitle =
     locale === "de" ? category.subtitle_de : category.subtitle_en;
 
-  const mdCols = 2;
-  const lgCols = 3;
+  const getLayout = (cols: number) => {
+    const col = index % cols;
+    const row = Math.floor(index / cols);
+    const isFirstRow = row === 0;
+    const isFirstCol = col === 0;
+    const hasRightNeighbor = col < cols - 1 && index + 1 < total;
+    const hasBottomNeighbor = index + cols < total;
 
-  const mdTopRightIndex = Math.min(total, mdCols) - 1;
-  const lgTopRightIndex = Math.min(total, lgCols) - 1;
+    return {
+      hasRightNeighbor,
+      hasBottomNeighbor,
+      isTopRightCorner: isFirstRow && !hasRightNeighbor,
+      isBottomLeftCorner: isFirstCol && !hasBottomNeighbor,
+      isBottomRightCorner: !hasRightNeighbor && !hasBottomNeighbor,
+    };
+  };
 
-  const mdLastRowStart = Math.max(0, total - (total % mdCols || mdCols));
-  const lgLastRowStart = Math.max(0, total - (total % lgCols || lgCols));
-
-  const mdBottomRight =
-    index === total - 1 || (total % mdCols === 0 && index === total - 2);
-  const lgBottomRight =
-    index === total - 1 || (total % lgCols === 0 && index === total - 2);
+  const sm = getLayout(1);
+  const md = getLayout(2);
+  const lg = getLayout(3);
+  const lgRemainder = total % 3;
+  const lgLastRow = Math.floor((total - 1) / 3);
+  const lgRow = Math.floor(index / 3);
+  const lgCol = index % 3;
+  const lgMissingColumnDivider =
+    lgRemainder !== 0 && lgRow === lgLastRow && lgCol === lgRemainder - 1;
 
   return (
     <button onClick={onClick} className="group w-full cursor-pointer text-left">
       <article
-        className={`h-full overflow-hidden rounded-none border border-border bg-card p-3 transition-colors group-hover:border-muted-foreground/40
-          ${index === 0 ? "rounded-tl-sm" : ""}
-          ${index === total - 1 ? "rounded-br-sm" : ""}
-          ${index === total - 1 ? "rounded-bl-sm" : ""}
-          ${index === mdTopRightIndex ? "md:rounded-tr-sm" : ""}
-          ${index === lgTopRightIndex ? "lg:rounded-tr-sm" : ""}
-          ${index === mdLastRowStart ? "md:rounded-bl-sm" : ""}
-          ${index === lgLastRowStart ? "lg:rounded-bl-sm" : ""}
-          ${mdBottomRight ? "md:rounded-br-sm" : ""}
-          ${lgBottomRight ? "lg:rounded-br-sm" : ""}`}
+        className={`h-full overflow-hidden rounded-none border border-muted bg-card p-3 transition-colors group-hover:border-muted-foreground/40
+          border-r border-l border-t
+          ${sm.hasBottomNeighbor ? "border-b-0" : "border-b"}
+          ${index === 0 ? "rounded-tl-sm rounded-tr-sm" : ""}
+          ${index === total - 1 ? "rounded-bl-sm rounded-br-sm" : ""}
+          md:rounded-tr-none md:rounded-bl-none md:rounded-br-none md:border-r-0 md:border-b-0
+          ${md.hasRightNeighbor ? "" : "md:border-r"}
+          ${md.hasBottomNeighbor ? "" : "md:border-b"}
+          ${md.isTopRightCorner ? "md:rounded-tr-sm" : ""}
+          ${md.isBottomLeftCorner ? "md:rounded-bl-sm" : ""}
+          ${md.isBottomRightCorner ? "md:rounded-br-sm" : ""}
+          lg:rounded-tr-none lg:rounded-bl-none lg:rounded-br-none lg:border-r-0 lg:border-b-0
+          ${lgMissingColumnDivider ? "lg:border-r" : ""}
+          ${lg.hasBottomNeighbor ? "" : "lg:border-b"}
+          ${lg.isTopRightCorner ? "lg:rounded-tr-sm" : ""}
+          ${lg.isBottomLeftCorner ? "lg:rounded-bl-sm" : ""}
+          ${lg.isBottomRightCorner ? "lg:rounded-br-sm" : ""}`}
       >
-        <div className="relative mb-4 aspect-[4/3] overflow-hidden rounded-sm border border-border/70 bg-muted">
+        <div className="relative mb-4 aspect-[4/3] overflow-hidden rounded-sm border border-muted/70 bg-muted">
           {category.thumbnail_url && (
             <Image
               src={category.thumbnail_url}

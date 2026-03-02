@@ -37,10 +37,10 @@ export function Tools() {
             return (
               <Card
                 key={tool.name}
-                className="rounded-sm border-border shadow-none bg-card"
+                className="rounded-sm border-muted shadow-none bg-card"
               >
                 <CardHeader className="space-y-2 pb-0">
-                  <div className="flex min-h-28 items-center justify-center rounded-sm bg-background dark:bg-white px-1 pb-2 pt-1 border border-border">
+                  <div className="flex min-h-28 items-center justify-center rounded-sm bg-background dark:bg-white px-1 pb-2 pt-1 border border-muted">
                     <Image
                       src={logoSrc}
                       alt={`${tool.name} logo`}
