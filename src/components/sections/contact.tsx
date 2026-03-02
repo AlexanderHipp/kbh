@@ -84,7 +84,7 @@ export function Contact() {
           </div>
 
           {/* Right: Form */}
-          <div className="bg-background rounded-lg border border-muted p-6 lg:p-8">
+          <div className="bg-background rounded-sm border border-muted p-6 lg:p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="name">{t.contact.name}</Label>

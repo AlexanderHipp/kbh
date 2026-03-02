@@ -49,7 +49,7 @@ export function WorkDetailWithMedia({
     return (
       <div className="relative">
         {/* Loading skeleton */}
-        <div className="mb-8 aspect-[3/2] animate-pulse rounded-lg bg-zinc-100" />
+        <div className="mb-8 aspect-[3/2] animate-pulse rounded-sm bg-zinc-100" />
         <div className="mb-8">
           <div className="h-8 w-48 bg-muted rounded animate-pulse mb-4" />
           <div className="h-4 w-full bg-muted rounded animate-pulse mb-2" />

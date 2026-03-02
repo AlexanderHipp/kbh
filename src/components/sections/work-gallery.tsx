@@ -29,8 +29,8 @@ function WorkGalleryContent() {
 
   return (
     <>
-      <div className="overflow-hidden rounded-sm border border-border">
-        <div className="grid grid-cols-1 gap-px bg-border md:grid-cols-2 lg:grid-cols-3">
+      <div className="overflow-hidden rounded-sm border border-muted">
+        <div className="grid grid-cols-1 gap-px bg-muted md:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
             <WorkTile
               key={category.slug}

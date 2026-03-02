@@ -9,10 +9,10 @@ import {
 } from "@/components/ui/card";
 
 const serviceImages = [
-  "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?w=600&h=400&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=600&h=400&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=600&h=400&fit=crop&auto=format",
+  "/images/services/medical.png",
+  "/images/services/innovation.png",
+  "/images/services/development.png",
+  "/images/services/series.png",
 ];
 
 export function Services() {
@@ -21,11 +21,16 @@ export function Services() {
   return (
     <section id="services" className="scroll-mt-24 py-24">
       <div className="container mx-auto px-4 max-w-6xl">
-        <h2 className="text-3xl font-semibold tracking-tight mb-12">
-          {t.services.title}
-        </h2>
+        <div className="mb-12">
+          <h2 className="text-3xl font-semibold tracking-tight">
+            {t.services.title}
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground max-w-2xl">
+            {t.services.subtitle}
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {t.services.items.map((item, index) => (
             <Card
               key={index}
@@ -38,7 +43,7 @@ export function Services() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <CardHeader className="flex-1 justify-start py-6 px-2">
+              <CardHeader className="flex-1 justify-start py-6 px-2 mr-4">
                 <CardTitle>{item.title}</CardTitle>
                 <CardDescription className="leading-relaxed">
                   {item.description}

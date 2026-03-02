@@ -27,12 +27,14 @@ export const dictionary = {
     work: {
       title: "Portfolio",
       subtitle:
-        "A selection of our projects in medical technology, product design and development.",
+        "A selection of our projects in medical technology, product design and development. Each project reflects our commitment to precision engineering and innovative solutions.",
       openPage: "View details",
       viewProject: "View project",
     },
     services: {
       title: "About Us",
+      subtitle:
+        "A design agency specializing in medical technology products – from early concept to series production.",
       items: [
         {
           title: "Medical Engineering",
@@ -178,12 +180,14 @@ export const dictionary = {
     work: {
       title: "Portfolio",
       subtitle:
-        "Eine Auswahl unserer Projekte in Medizintechnik, Produktdesign und Entwicklung.",
+        "Eine Auswahl unserer Projekte in Medizintechnik, Produktdesign und Entwicklung. Jedes Projekt spiegelt unser Engagement für Präzisionstechnik und innovative Lösungen wider.",
       openPage: "Details ansehen",
       viewProject: "Projekt ansehen",
     },
     services: {
       title: "Über uns",
+      subtitle:
+        "Eine Designagentur für Medizintechnikprodukte – vom frühen Konzept bis zur Serienproduktion.",
       items: [
         {
           title: "Medizintechnik",
@@ -335,6 +339,7 @@ export interface Dictionary {
   };
   services: {
     title: string;
+    subtitle: string;
     items: Array<{
       title: string;
       description: string;
