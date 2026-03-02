@@ -84,6 +84,12 @@ Required Supabase bucket: `media` (public)
 ### Business Data
 - `src/lib/imprint-data.ts` - Company contact info (email, phone, address) used across imprint, privacy, and contact sections
 
+## Brand Colors
+
+- **Primary Blue**: `#0202EF` (hover: `#1A1AF2`)
+- **Black**: `#222222`
+- **3D Scene**: `#999999` (light) / `#666666` (dark)
+
 ## Conventions
 
 - `@/` path alias for `src/` imports
